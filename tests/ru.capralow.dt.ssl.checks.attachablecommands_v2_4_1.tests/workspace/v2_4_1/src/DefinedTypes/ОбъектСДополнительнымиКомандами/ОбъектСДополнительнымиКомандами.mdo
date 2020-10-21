@@ -9,6 +9,6 @@
     <value>Объект с дополнительными командами</value>
   </synonym>
   <type>
-    <types>DocumentRef.ВсёНастроено</types>
+    <types>DocumentRef.ВнешниеВсёНастроено</types>
   </type>
 </mdclass:DefinedType>

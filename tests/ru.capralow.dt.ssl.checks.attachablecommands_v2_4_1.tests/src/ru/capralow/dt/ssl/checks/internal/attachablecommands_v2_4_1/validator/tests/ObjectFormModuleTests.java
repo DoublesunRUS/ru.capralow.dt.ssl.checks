@@ -15,7 +15,8 @@ import org.eclipse.xtext.validation.CheckMode;
 import org.eclipse.xtext.validation.IResourceValidator;
 import org.eclipse.xtext.validation.Issue;
 import org.junit.Assert;
-import org.junit.Rule;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 import com._1c.g5.v8.dt.bsl.resource.BslResource;
@@ -30,20 +31,41 @@ import ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1.validator.Ob
 
 public class ObjectFormModuleTests
 {
-    @Rule
-    public TestingWorkspace testingWorkspace = new TestingWorkspace();
+
+    @ClassRule
+    public static TestingWorkspace testingWorkspace = new TestingWorkspace();
+
+    @BeforeClass
+    public static void setUp() throws Exception
+    {
+        testingWorkspace.setUpProject("v2_4_1", ObjectFormModuleTests.class); //$NON-NLS-1$
+    }
 
     @Test
-    public void testListFormModuleOnCreateAtServerExists() throws Exception
+    public void testAdditionalsObjectFormModuleOnCreateAtServerExists() throws Exception
     {
-        check("v2_4_1", "src/Documents/ВсёНастроено/Forms/ФормаСписка/Module.bsl", Severity.WARNING, //$NON-NLS-1$//$NON-NLS-2$
+        check("v2_4_1", "src/Documents/ВнешниеВсёНастроено/Forms/ФормаДокумента/Module.bsl", Severity.WARNING, //$NON-NLS-1$//$NON-NLS-2$
             ObjectFormModule.ERROR_METHOD_ON_CREATE_AT_SERVER_EXISTS, 0);
     }
 
     @Test
-    public void testObjectFormModuleOnCreateAtServerExists() throws Exception
+    public void testFillingsObjectFormModuleOnCreateAtServerExists() throws Exception
     {
-        check("v2_4_1", "src/Documents/ВсёНастроено/Forms/ФормаДокумента/Module.bsl", Severity.WARNING, //$NON-NLS-1$//$NON-NLS-2$
+        check("v2_4_1", "src/Documents/ЗаполнениеВсёНастроено/Forms/ФормаДокумента/Module.bsl", Severity.WARNING, //$NON-NLS-1$//$NON-NLS-2$
+            ObjectFormModule.ERROR_METHOD_ON_CREATE_AT_SERVER_EXISTS, 0);
+    }
+
+    @Test
+    public void testPrintsObjectFormModuleOnCreateAtServerExists() throws Exception
+    {
+        check("v2_4_1", "src/Documents/ПечатьВсёНастроено/Forms/ФормаДокумента/Module.bsl", Severity.WARNING, //$NON-NLS-1$//$NON-NLS-2$
+            ObjectFormModule.ERROR_METHOD_ON_CREATE_AT_SERVER_EXISTS, 0);
+    }
+
+    @Test
+    public void testReportsObjectFormModuleOnCreateAtServerExists() throws Exception
+    {
+        check("v2_4_1", "src/Documents/ОтчетыВсёНастроено/Forms/ФормаДокумента/Module.bsl", Severity.WARNING, //$NON-NLS-1$//$NON-NLS-2$
             ObjectFormModule.ERROR_METHOD_ON_CREATE_AT_SERVER_EXISTS, 0);
     }
 
@@ -68,8 +90,6 @@ public class ObjectFormModuleTests
 
     private List<Issue> validate(String projectName, String fileName) throws Exception
     {
-        testingWorkspace.setUpProject(projectName, getClass());
-
         IV8File file = V8ModelManager.INSTANCE.getV8Model().getV8Project(projectName).getV8File(fileName);
         Assert.assertTrue(file instanceof V8XtextFile);
         V8XtextFile xtextFile = (V8XtextFile)file;

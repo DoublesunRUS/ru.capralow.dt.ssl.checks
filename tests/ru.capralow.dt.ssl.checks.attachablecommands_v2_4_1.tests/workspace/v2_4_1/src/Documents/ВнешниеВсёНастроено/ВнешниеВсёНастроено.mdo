@@ -7,13 +7,13 @@
     <listType typeId="7295243c-db57-4535-986d-0f1c4af44580" valueTypeId="0a4f42f9-763a-4412-9590-89246e0cc81d"/>
     <managerType typeId="38c79966-daac-46a1-8180-b1da20d85a37" valueTypeId="f05e0919-f324-475c-b01f-28263d40b744"/>
   </producedTypes>
-  <name>ВсёНастроено</name>
+  <name>ВнешниеВсёНастроено</name>
   <synonym>
     <key>ru</key>
-    <value>Всё настроено</value>
+    <value>Внешние всё настроено</value>
   </synonym>
   <useStandardCommands>true</useStandardCommands>
-  <inputByString>Document.ВсёНастроено.StandardAttribute.Number</inputByString>
+  <inputByString>Document.ВнешниеВсёНастроено.StandardAttribute.Number</inputByString>
   <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
   <createOnInput>Use</createOnInput>
   <dataLockControlMode>Managed</dataLockControlMode>
@@ -23,8 +23,8 @@
   <numberAllowedLength>Variable</numberAllowedLength>
   <checkUnique>true</checkUnique>
   <autonumbering>true</autonumbering>
-  <defaultObjectForm>Document.ВсёНастроено.Form.ФормаДокумента</defaultObjectForm>
-  <defaultListForm>Document.ВсёНастроено.Form.ФормаСписка</defaultListForm>
+  <defaultObjectForm>Document.ВнешниеВсёНастроено.Form.ФормаДокумента</defaultObjectForm>
+  <defaultListForm>Document.ВнешниеВсёНастроено.Form.ФормаСписка</defaultListForm>
   <postInPrivilegedMode>true</postInPrivilegedMode>
   <unpostInPrivilegedMode>true</unpostInPrivilegedMode>
   <forms uuid="7ac7e613-7e7f-4dc1-8ac5-a0aa75980234">

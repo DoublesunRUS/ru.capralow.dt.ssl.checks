@@ -131,7 +131,7 @@
     <name>Объект</name>
     <id>1</id>
     <valueType>
-      <types>DocumentObject.ВсёНастроено</types>
+      <types>DocumentObject.ВнешниеВсёНастроено</types>
     </valueType>
     <view>
       <common>true</common>

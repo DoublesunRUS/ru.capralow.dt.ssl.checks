@@ -41,5 +41,8 @@
   <commonModules>CommonModule.УправлениеПечатьюПереопределяемый</commonModules>
   <definedTypes>DefinedType.ОбъектСДополнительнымиКомандами</definedTypes>
   <documents>Document.БезКоманд</documents>
-  <documents>Document.ВсёНастроено</documents>
+  <documents>Document.ВнешниеВсёНастроено</documents>
+  <documents>Document.ЗаполнениеВсёНастроено</documents>
+  <documents>Document.ОтчетыВсёНастроено</documents>
+  <documents>Document.ПечатьВсёНастроено</documents>
 </mdclass:Configuration>

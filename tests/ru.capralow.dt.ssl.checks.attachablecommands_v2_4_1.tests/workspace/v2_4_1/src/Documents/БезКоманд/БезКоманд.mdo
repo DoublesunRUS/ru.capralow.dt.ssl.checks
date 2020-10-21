@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Document xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="2631b582-5bb8-4151-8991-8612b3f8f6a2">
+  <producedTypes>
+    <objectType typeId="01dfba65-3670-4303-9b2e-4a7ce5d782c5" valueTypeId="ef8dfe7e-d115-40d2-a6a2-2be1c56b1448"/>
+    <refType typeId="a6a8a041-f38a-4a02-8123-86b65c3ae19d" valueTypeId="9f2847aa-08e5-4c17-8f6b-569d9f287f4e"/>
+    <selectionType typeId="3af68d98-397d-4e6c-9ad2-22d9856de5d7" valueTypeId="71571005-92f2-43ab-8a66-7f425ebd5ed5"/>
+    <listType typeId="f548a8a2-091b-4d87-9537-bff4e598e44a" valueTypeId="66b04eba-81cc-483e-8b90-b9ad13d75cf9"/>
+    <managerType typeId="1ae00805-2e60-4db8-87b3-b8d0094e0a17" valueTypeId="75cd3df3-eeb1-4fc8-a6f3-29269440340e"/>
+  </producedTypes>
+  <name>БезКоманд</name>
+  <synonym>
+    <key>ru</key>
+    <value>Без команд</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <inputByString>Document.БезКоманд.StandardAttribute.Number</inputByString>
+  <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
+  <createOnInput>Use</createOnInput>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <fullTextSearch>Use</fullTextSearch>
+  <numberType>String</numberType>
+  <numberLength>9</numberLength>
+  <numberAllowedLength>Variable</numberAllowedLength>
+  <checkUnique>true</checkUnique>
+  <autonumbering>true</autonumbering>
+  <defaultObjectForm>Document.БезКоманд.Form.ФормаДокумента</defaultObjectForm>
+  <defaultListForm>Document.БезКоманд.Form.ФормаСписка</defaultListForm>
+  <postInPrivilegedMode>true</postInPrivilegedMode>
+  <unpostInPrivilegedMode>true</unpostInPrivilegedMode>
+  <forms uuid="bf8538a9-148a-425e-9ec3-bc37d7ce25d2">
+    <name>ФормаДокумента</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма документа</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+  <forms uuid="02f855b2-b367-4d9b-a1b2-e897faeb6c88">
+    <name>ФормаСписка</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма списка</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:Document>

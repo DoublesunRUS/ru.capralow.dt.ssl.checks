@@ -16,7 +16,7 @@
 	<name>Tests</name>
 
 	<modules>
-		<module>ru.capralow.dt.ssl.checks.tests</module>
+		<module>ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1.tests</module>
 	</modules>
 
 	<profiles>

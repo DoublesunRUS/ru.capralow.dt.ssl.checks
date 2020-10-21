@@ -17,7 +17,7 @@
 	<name>Bundles</name>
 
 	<modules>
-		<module>ru.capralow.dt.ssl.checks.core</module>
+		<module>ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1</module>
 	</modules>
 
 	<build>

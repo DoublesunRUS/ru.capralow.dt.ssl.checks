@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tests
+Bundle-SymbolicName: ru.capralow.dt.ssl.checks.core.tests
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: ru.capralow.dt.ssl.checks.core;bundle-version="1.0.0"
+Automatic-Module-Name: ru.capralow.dt.ssl.checks.core.tests
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Require-Bundle: com._1c.g5.v8.dt.testing,
+ org.junit,
+ org.eclipse.core.resources,
+ com._1c.g5.v8.dt.core,
+ com._1c.g5.ides.core

@@ -12,6 +12,7 @@ public class Messages
     private static final String BUNDLE_NAME = "ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1.messages";//$NON-NLS-1$
 
     public static String Failed_to_create_injector_for_0;
+    public static String Internal_class;
 
     static
     {

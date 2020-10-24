@@ -12,6 +12,11 @@ final class Messages
         "ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1.validator.messages"; //$NON-NLS-1$
 
     public static String Error_ObjectFormModule_MethodOnCreateAtServerExists;
+    public static String Error_ObjectFormModule_MethodOnReadAtServerExists;
+    public static String Error_ObjectFormModule_MethodOnOpenExists;
+    public static String Error_ObjectFormModule_MethodExecuteCommandExists;
+    public static String Error_ObjectFormModule_MethodExecuteCommandAtServerExists;
+    public static String Error_ObjectFormModule_MethodRereadCommandsExists;
 
     static
     {

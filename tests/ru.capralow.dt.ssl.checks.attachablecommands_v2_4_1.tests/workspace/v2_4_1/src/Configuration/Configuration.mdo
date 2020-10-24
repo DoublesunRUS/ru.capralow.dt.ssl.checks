@@ -30,6 +30,7 @@
     <languageCode>ru</languageCode>
   </languages>
   <subsystems>Subsystem.СтандартныеПодсистемы</subsystems>
+  <commonModules>CommonModule.ВариантыОтчетовВложенныйМодуль</commonModules>
   <commonModules>CommonModule.ВариантыОтчетовПереопределяемый</commonModules>
   <commonModules>CommonModule.ДополнительныеОтчетыИОбработкиПереопределяемый</commonModules>
   <commonModules>CommonModule.ЗаполнениеОбъектовПереопределяемый</commonModules>

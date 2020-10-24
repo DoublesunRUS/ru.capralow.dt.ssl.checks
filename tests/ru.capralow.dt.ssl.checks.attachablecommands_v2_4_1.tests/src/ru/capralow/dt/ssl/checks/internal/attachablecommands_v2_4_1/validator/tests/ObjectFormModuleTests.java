@@ -32,6 +32,13 @@ public class ObjectFormModuleTests
     }
 
     @Test
+    public void testExcludedObjectFormModuleOnCreateAtServerExists() throws Exception
+    {
+        TestingWorkspaceUtils.check("v2_4_1", "src/Documents/БезКоманд/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$//$NON-NLS-2$
+            Severity.WARNING, ObjectFormModule.ERROR_METHOD_ON_CREATE_AT_SERVER_EXISTS, 0);
+    }
+
+    @Test
     public void testFillingsObjectFormModuleOnCreateAtServerExists() throws Exception
     {
         TestingWorkspaceUtils.check("v2_4_1", "src/Documents/ЗаполнениеВсёНастроено/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$//$NON-NLS-2$

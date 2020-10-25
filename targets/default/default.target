@@ -112,7 +112,7 @@
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
         <unit id="com.e1c.ssl.feature.feature.group" version="0.0.0"/>
-        <repository id="dt_repository" location="https://edt.1c.ru/releases/plugins/ssl-support/edt-2020.5.0/0.2.0/repo/"/>
+        <repository id="dt_repository" location="https://edt.1c.ru/releases/plugins/ssl-support/edt-2020.6.0/0.3.0/repo/"/>
     </location>
 </locations>
 </target>

@@ -30,20 +30,35 @@
     <languageCode>ru</languageCode>
   </languages>
   <subsystems>Subsystem.СтандартныеПодсистемы</subsystems>
-  <commonModules>CommonModule.ВариантыОтчетовВложенныйМодуль</commonModules>
+  <commonModules>CommonModule.ВариантыОтчетовВложенныйМодуль1</commonModules>
+  <commonModules>CommonModule.ВариантыОтчетовВложенныйМодуль2</commonModules>
   <commonModules>CommonModule.ВариантыОтчетовПереопределяемый</commonModules>
   <commonModules>CommonModule.ДополнительныеОтчетыИОбработкиПереопределяемый</commonModules>
+  <commonModules>CommonModule.ЗаполнениеОбъектовВложенныйМодуль1</commonModules>
+  <commonModules>CommonModule.ЗаполнениеОбъектовВложенныйМодуль2</commonModules>
   <commonModules>CommonModule.ЗаполнениеОбъектовПереопределяемый</commonModules>
   <commonModules>CommonModule.ОбновлениеИнформационнойБазыБСП</commonModules>
+  <commonModules>CommonModule.ОбщегоНазначения</commonModules>
   <commonModules>CommonModule.ПодключаемыеКоманды</commonModules>
   <commonModules>CommonModule.ПодключаемыеКомандыКлиент</commonModules>
   <commonModules>CommonModule.ПодключаемыеКомандыКлиентСервер</commonModules>
   <commonModules>CommonModule.ПодключаемыеКомандыПереопределяемый</commonModules>
+  <commonModules>CommonModule.УправлениеПечатьюВложенныйМодуль1</commonModules>
+  <commonModules>CommonModule.УправлениеПечатьюВложенныйМодуль2</commonModules>
   <commonModules>CommonModule.УправлениеПечатьюПереопределяемый</commonModules>
   <definedTypes>DefinedType.ОбъектСДополнительнымиКомандами</definedTypes>
-  <documents>Document.БезКоманд</documents>
+  <documents>Document.ВнешниеБезВызовов</documents>
+  <documents>Document.ВнешниеБезПроцедур</documents>
   <documents>Document.ВнешниеВсёНастроено</documents>
+  <documents>Document.ЗаполнениеБезВызовов</documents>
+  <documents>Document.ЗаполнениеБезПроцедур</documents>
   <documents>Document.ЗаполнениеВсёНастроено</documents>
+  <documents>Document.НенужныеПроцедурыИВызовы</documents>
+  <documents>Document.НеПодключен</documents>
+  <documents>Document.ОтчетыБезВызовов</documents>
+  <documents>Document.ОтчетыБезПроцедур</documents>
   <documents>Document.ОтчетыВсёНастроено</documents>
+  <documents>Document.ПечатьБезВызовов</documents>
+  <documents>Document.ПечатьБезПроцедур</documents>
   <documents>Document.ПечатьВсёНастроено</documents>
 </mdclass:Configuration>

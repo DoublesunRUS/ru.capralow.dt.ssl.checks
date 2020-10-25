@@ -13,16 +13,63 @@ import com._1c.g5.v8.dt.bm.index.emf.IBmEmfIndexManager;
 import com._1c.g5.v8.dt.bm.index.emf.IBmEmfIndexProvider;
 import com._1c.g5.v8.dt.bsl.model.Method;
 import com._1c.g5.v8.dt.bsl.model.Module;
+import com._1c.g5.v8.dt.core.platform.IConfigurationProject;
+import com._1c.g5.v8.dt.core.platform.IExtensionProject;
+import com._1c.g5.v8.dt.core.platform.IExternalObjectProject;
 import com._1c.g5.v8.dt.core.platform.IV8Project;
+import com._1c.g5.v8.dt.metadata.mdclass.Configuration;
 import com._1c.g5.v8.dt.metadata.mdclass.MdClassPackage;
 import com._1c.g5.v8.dt.metadata.mdclass.MdObject;
 
 public class MdObjects
 {
 
-    public static final String CONFIGURATION_OBJECT = "{0}.{1}"; //$NON-NLS-1$
+    public static final String MD_OBJECT = "{0}.{1}"; //$NON-NLS-1$
 
-    public static MdObject getConfigurationObject(String objectFullName, IV8Project v8Project)
+    public static Configuration getConfigurationForProject(IV8Project v8Project)
+    {
+        if (v8Project instanceof IConfigurationProject)
+            return ((IConfigurationProject)v8Project).getConfiguration();
+        else if (v8Project instanceof IExtensionProject)
+            return ((IExtensionProject)v8Project).getConfiguration();
+        else if (v8Project instanceof IExternalObjectProject)
+            return ((IExternalObjectProject)v8Project).getParent().getConfiguration();
+
+        return null;
+    }
+
+    public static String getEnglishName(String name)
+    {
+        String englishName = ""; //$NON-NLS-1$
+
+        if (name.equals("Подсистемы")) //$NON-NLS-1$
+            englishName = "Subsystems"; //$NON-NLS-1$
+
+        else if (name.equals("ОбщиеМодули")) //$NON-NLS-1$
+            englishName = "CommonModules"; //$NON-NLS-1$
+
+        else if (name.equals("Справочники")) //$NON-NLS-1$
+            englishName = "Catalogs"; //$NON-NLS-1$
+
+        else if (name.equals("Документы")) //$NON-NLS-1$
+            englishName = "Documents"; //$NON-NLS-1$
+
+        else if (name.equals("Перечисления")) //$NON-NLS-1$
+            englishName = "Enums"; //$NON-NLS-1$
+
+        else if (name.equals("ПланыВидовХарактеристик")) //$NON-NLS-1$
+            englishName = "ChartsOfCharactericticTypes"; //$NON-NLS-1$
+
+        else if (name.equals("ПланыВидовРасчета")) //$NON-NLS-1$
+            englishName = "ChartOfCalculationTypes"; //$NON-NLS-1$
+
+        else if (name.equals("РегистрыСведений")) //$NON-NLS-1$
+            englishName = "InformationRegisters"; //$NON-NLS-1$
+
+        return englishName;
+    }
+
+    public static MdObject getMdObject(String objectFullName, IV8Project v8Project)
     {
         IBmEmfIndexManager bmEmfIndexManager =
             AttacheableCommandsPlugin.getInstance().getInjector().getInstance(IBmEmfIndexManager.class);
@@ -87,28 +134,31 @@ public class MdObjects
 
         String objectType = objectFullName.substring(0, objectFullName.indexOf('.'));
 
-        if (objectType.equals("Подсистема"))
+        if (objectType.equals("Подсистема")) //$NON-NLS-1$
             mdLiteral = MdClassPackage.Literals.SUBSYSTEM;
 
-        else if (objectType.equals("ОбщийМодуль"))
+        else if (objectType.equals("ОбщийМодуль")) //$NON-NLS-1$
             mdLiteral = MdClassPackage.Literals.COMMON_MODULE;
 
-        else if (objectType.equals("Справочник"))
+        else if (objectType.equals("ОпределяемыйТип")) //$NON-NLS-1$
+            mdLiteral = MdClassPackage.Literals.DEFINED_TYPE;
+
+        else if (objectType.equals("Справочник")) //$NON-NLS-1$
             mdLiteral = MdClassPackage.Literals.CATALOG;
 
-        else if (objectType.equals("Документ"))
+        else if (objectType.equals("Документ")) //$NON-NLS-1$
             mdLiteral = MdClassPackage.Literals.DOCUMENT;
 
-        else if (objectType.equals("Перечисление"))
+        else if (objectType.equals("Перечисление")) //$NON-NLS-1$
             mdLiteral = MdClassPackage.Literals.ENUM;
 
-        else if (objectType.equals("ПланВидовХарактеристик"))
+        else if (objectType.equals("ПланВидовХарактеристик")) //$NON-NLS-1$
             mdLiteral = MdClassPackage.Literals.CHART_OF_CHARACTERISTIC_TYPES;
 
-        else if (objectType.equals("ПланВидовРасчета"))
+        else if (objectType.equals("ПланВидовРасчета")) //$NON-NLS-1$
             mdLiteral = MdClassPackage.Literals.CHART_OF_CALCULATION_TYPES;
 
-        else if (objectType.equals("РегистрСведений"))
+        else if (objectType.equals("РегистрСведений")) //$NON-NLS-1$
             mdLiteral = MdClassPackage.Literals.INFORMATION_REGISTER;
 
         return mdLiteral;

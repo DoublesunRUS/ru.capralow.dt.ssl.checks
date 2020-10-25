@@ -26,7 +26,7 @@ import com.google.common.collect.Collections2;
 public class TestingWorkspaceUtils
 {
 
-    public static void check(String projectName, String fileName, Severity severity, final String issueCode,
+    public static void checkIssue(String projectName, String fileName, final String issueCode, Severity severity,
         int lineNumber) throws Exception
     {
         Collection<Issue> issues = validate(projectName, fileName);
@@ -39,10 +39,25 @@ public class TestingWorkspaceUtils
                 return issueCode.equals(input.getCode());
             }
         });
-        Assert.assertEquals(1, issues.size());
+        Assert.assertEquals("Количество проблем не совпадает", 1, issues.size());
         Issue issue = issues.iterator().next();
-        Assert.assertEquals(severity, issue.getSeverity());
-        Assert.assertEquals(lineNumber, (int)issue.getLineNumber());
+        Assert.assertEquals("Серьезность проблемы не совпадает", severity, issue.getSeverity());
+        Assert.assertEquals("Номер строки с проблемой не совпадает", lineNumber, (int)issue.getLineNumber());
+    }
+
+    public static void checkNoIssue(String projectName, String fileName, final String issueCode) throws Exception
+    {
+        Collection<Issue> issues = validate(projectName, fileName);
+
+        issues = Collections2.filter(issues, new Predicate<Issue>()
+        {
+            @Override
+            public boolean apply(Issue input)
+            {
+                return issueCode.equals(input.getCode());
+            }
+        });
+        Assert.assertEquals("Количество проблем не совпадает", 0, issues.size());
     }
 
     private static List<Issue> validate(String projectName, String fileName) throws Exception

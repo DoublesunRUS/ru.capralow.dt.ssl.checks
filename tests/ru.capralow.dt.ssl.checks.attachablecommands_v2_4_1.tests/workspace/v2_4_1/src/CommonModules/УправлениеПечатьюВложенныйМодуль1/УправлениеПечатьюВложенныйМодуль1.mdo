@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="94bf1d0c-5099-4c38-9d25-838fd0173e34">
+  <name>УправлениеПечатьюВложенныйМодуль1</name>
+  <synonym>
+    <key>ru</key>
+    <value>Управление печатью вложенный модуль 1</value>
+  </synonym>
+  <server>true</server>
+  <externalConnection>true</externalConnection>
+  <clientOrdinaryApplication>true</clientOrdinaryApplication>
+</mdclass:CommonModule>

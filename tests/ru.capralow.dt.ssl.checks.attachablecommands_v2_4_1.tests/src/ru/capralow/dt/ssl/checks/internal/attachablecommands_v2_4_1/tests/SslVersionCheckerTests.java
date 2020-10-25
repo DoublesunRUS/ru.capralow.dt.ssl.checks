@@ -82,7 +82,7 @@ public class SslVersionCheckerTests
     }
 
     @Test
-    public void testVersion_2_4_1__3_0_1() throws Exception
+    public void testVersion_2_4_1__3_0_3() throws Exception
     {
         testTrueVersion("2.4.1", "3.0.3"); //$NON-NLS-1$ //$NON-NLS-2$
     }
@@ -94,9 +94,9 @@ public class SslVersionCheckerTests
     }
 
     @Test
-    public void testVersion_3_0_3__3_1_2() throws Exception
+    public void testVersion_3_1_1__3_1_1() throws Exception
     {
-        testFalseVersion("3.0.3", "3.1.2"); //$NON-NLS-1$ //$NON-NLS-2$
+        testFalseVersion("3.1.1", "3.1.1"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     @Test

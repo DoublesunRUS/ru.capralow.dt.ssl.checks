@@ -10,5 +10,7 @@
   </synonym>
   <type>
     <types>DocumentRef.ВнешниеВсёНастроено</types>
+    <types>DocumentRef.ВнешниеБезВызовов</types>
+    <types>DocumentRef.ВнешниеБезПроцедур</types>
   </type>
 </mdclass:DefinedType>

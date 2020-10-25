@@ -56,25 +56,25 @@ public class SslVersionChecker
     {
         String version = ""; //$NON-NLS-1$
 
-        MdObject configurationObject = MdObjects.getConfigurationObject(
-            MessageFormat.format(MdObjects.CONFIGURATION_OBJECT, "ОбщийМодуль", "ОбновлениеИнформационнойБазыБСП"), //$NON-NLS-2$
+        MdObject mdObject = MdObjects.getMdObject(
+            MessageFormat.format(MdObjects.MD_OBJECT, "ОбщийМодуль", "ОбновлениеИнформационнойБазыБСП"), //$NON-NLS-2$
             v8Project);
-        if (configurationObject == null)
+        if (mdObject == null)
             return version;
 
-        CommonModule mdCommonModule = (CommonModule)configurationObject;
+        CommonModule commonModule = (CommonModule)mdObject;
 
-        Method mdMethod = MdObjects.getMethod(mdCommonModule.getModule(), "ПриДобавленииПодсистемы"); //$NON-NLS-1$
-        if (mdMethod == null)
+        Method method = MdObjects.getMethod(commonModule.getModule(), "ПриДобавленииПодсистемы"); //$NON-NLS-1$
+        if (method == null)
             return version;
 
-        for (Statement mdStatement : mdMethod.getStatements())
+        for (Statement statement : method.getStatements())
         {
-            DynamicFeatureAccess methodAccess = (DynamicFeatureAccess)((SimpleStatement)mdStatement).getLeft();
+            DynamicFeatureAccess methodLeftFeatureAccess = (DynamicFeatureAccess)((SimpleStatement)statement).getLeft();
 
-            if (methodAccess.getName().equalsIgnoreCase("Версия")) //$NON-NLS-1$
+            if (methodLeftFeatureAccess.getName().equalsIgnoreCase("Версия")) //$NON-NLS-1$
             {
-                version = ((StringLiteral)((SimpleStatement)mdStatement).getRight()).getLines().get(0);
+                version = ((StringLiteral)((SimpleStatement)statement).getRight()).getLines().get(0);
                 version = version.substring(1, version.length() - 1);
                 break;
             }

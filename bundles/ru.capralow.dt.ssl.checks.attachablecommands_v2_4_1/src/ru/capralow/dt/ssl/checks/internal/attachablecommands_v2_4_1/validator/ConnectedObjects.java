@@ -4,11 +4,11 @@
 package ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1.validator;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -37,6 +37,8 @@ import com._1c.g5.v8.dt.bsl.model.StringLiteral;
 import com._1c.g5.v8.dt.bsl.resource.DynamicFeatureAccessComputer;
 import com._1c.g5.v8.dt.core.platform.IV8Project;
 import com._1c.g5.v8.dt.mcore.Environmental;
+import com._1c.g5.v8.dt.mcore.TypeItem;
+import com._1c.g5.v8.dt.mcore.util.McoreUtil;
 import com._1c.g5.v8.dt.metadata.mdclass.CommonModule;
 import com._1c.g5.v8.dt.metadata.mdclass.DefinedType;
 import com._1c.g5.v8.dt.metadata.mdclass.MdObject;
@@ -52,9 +54,9 @@ public class ConnectedObjects
         IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(URI.createURI("foo.bsl")).get( //$NON-NLS-1$
             DynamicFeatureAccessComputer.class);
 
-    public static EList<String> getAllObjects(IV8Project v8Project)
+    public static List<String> getAllObjects(IV8Project v8Project)
     {
-        EList<String> objectsList = new BasicEList<>();
+        List<String> objectsList = new ArrayList<>();
 
         getAdditionalObjects(objectsList, v8Project);
         getFillingObjects(objectsList, v8Project);
@@ -64,18 +66,18 @@ public class ConnectedObjects
         return objectsList;
     }
 
-    private static void getAdditionalObjects(EList<String> objectsList, IV8Project v8Project)
+    private static void getAdditionalObjects(List<String> objectsList, IV8Project v8Project)
     {
         MdObject mdObject = MdObjects.getMdObject(
             MessageFormat.format(MdObjects.MD_OBJECT, "ОпределяемыйТип", "ОбъектСДополнительнымиКомандами"), v8Project); //$NON-NLS-1$ //$NON-NLS-2$
         if (mdObject == null)
             return;
 
-        DefinedType definedTypeObject = (DefinedType)mdObject;
-
+        for (TypeItem typefromDefinedType : ((DefinedType)mdObject).getType().getTypes())
+            objectsList.add(McoreUtil.getTypeName(typefromDefinedType).replace("Ref", "")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    private static void getFillingObjects(EList<String> objectsList, IV8Project v8Project)
+    private static void getFillingObjects(List<String> objectsList, IV8Project v8Project)
     {
         MdObject mdObject = MdObjects.getMdObject(
             MessageFormat.format(MdObjects.MD_OBJECT, "ОбщийМодуль", "ЗаполнениеОбъектовПереопределяемый"), //$NON-NLS-1$//$NON-NLS-2$
@@ -92,7 +94,7 @@ public class ConnectedObjects
         parseStatements(method, objectsList, v8Project);
     }
 
-    private static void getPrintObjects(EList<String> objectsList, IV8Project v8Project)
+    private static void getPrintObjects(List<String> objectsList, IV8Project v8Project)
     {
         MdObject mdObject = MdObjects.getMdObject(
             MessageFormat.format(MdObjects.MD_OBJECT, "ОбщийМодуль", "УправлениеПечатьюПереопределяемый"), //$NON-NLS-1$//$NON-NLS-2$
@@ -109,7 +111,7 @@ public class ConnectedObjects
         parseStatements(method, objectsList, v8Project);
     }
 
-    private static void getReportObjects(EList<String> objectsList, IV8Project v8Project)
+    private static void getReportObjects(List<String> objectsList, IV8Project v8Project)
     {
         MdObject mdObject = MdObjects.getMdObject(
             MessageFormat.format(MdObjects.MD_OBJECT, "ОбщийМодуль", "ВариантыОтчетовПереопределяемый"), //$NON-NLS-1$//$NON-NLS-2$
@@ -119,14 +121,14 @@ public class ConnectedObjects
 
         CommonModule commonModule = (CommonModule)mdObject;
 
-        Method method = MdObjects.getMethod(commonModule.getModule(), "ОпределитьОбъектыСКомандамиОтчетов"); //$NON-NLS-1$
+        Method method = MdObjects.getMethod(commonModule.getModule(), "ПриОпределенииОбъектовСКомандамиПечати"); //$NON-NLS-1$
         if (method == null)
             return;
 
         parseStatements(method, objectsList, v8Project);
     }
 
-    private static void parseIfStatement(Statement statement, String variableName, EList<String> objectsList,
+    private static void parseIfStatement(Statement statement, String variableName, List<String> objectsList,
         Map<String, String> modulesAliases, IV8Project v8Project)
     {
         IfStatement ifStatement = (IfStatement)statement;
@@ -141,27 +143,45 @@ public class ConnectedObjects
             parseSimpleStatement(ifPartStatement, variableName, objectsList, modulesAliases, v8Project);
     }
 
-    private static void parseMethodInAnotherModule(DynamicFeatureAccess dynamicMethodAccess, EList<String> objectsList,
-        IV8Project v8Project)
+    private static void parseMethodInAnotherModule(DynamicFeatureAccess dynamicMethodAccess, List<String> objectsList,
+        Map<String, String> modulesAliases, IV8Project v8Project)
     {
+        Method method = null;
+
         List<FeatureEntry> featureEntries = dynamicFeatureAccessComputer.resolveObject(dynamicMethodAccess,
             EcoreUtil2.getContainerOfType(dynamicMethodAccess, Environmental.class).environments());
         if (featureEntries.isEmpty())
-            return; // "Не установлен плагин SSL Support."
+        {
+            // "Не установлен плагин SSL Support."
+            CommonModule commonModule =
+                (CommonModule)MdObjects.getMdObject(MessageFormat.format(MdObjects.MD_OBJECT, "ОбщийМодуль", //$NON-NLS-1$
+                    modulesAliases.get(((FeatureAccess)dynamicMethodAccess.getSource()).getName())), v8Project);
 
-        FeatureEntry featureEntry = featureEntries.get(0);
-        EObject feature = featureEntry.getFeature();
+            if (commonModule == null)
+                return;
 
-        EObject newObject = EcoreFactory.eINSTANCE.createEObject();
-        ((InternalEObject)newObject).eSetProxyURI(((SourceObjectLinkProvider)feature).getSourceUri());
-        Method method = (Method)EcoreUtil.resolve(newObject, MdObjects.getConfigurationForProject(v8Project));
-        if (method.eResource() instanceof DerivedStateAwareResource)
-            ((DerivedStateAwareResource)method.eResource()).installDerivedState(false);
+            method = MdObjects.getMethod(commonModule.getModule(), dynamicMethodAccess.getName());
+            if (method == null)
+                return;
+
+        }
+        else
+        {
+            FeatureEntry featureEntry = featureEntries.get(0);
+            EObject feature = featureEntry.getFeature();
+
+            EObject newObject = EcoreFactory.eINSTANCE.createEObject();
+            ((InternalEObject)newObject).eSetProxyURI(((SourceObjectLinkProvider)feature).getSourceUri());
+            method = (Method)EcoreUtil.resolve(newObject, MdObjects.getConfigurationForProject(v8Project));
+            if (method.eResource() instanceof DerivedStateAwareResource)
+                ((DerivedStateAwareResource)method.eResource()).installDerivedState(false);
+
+        }
 
         parseStatements(method, objectsList, v8Project);
     }
 
-    private static void parseMethodInSameModule(StaticFeatureAccess staticMethodAccess, EList<String> objectsList,
+    private static void parseMethodInSameModule(StaticFeatureAccess staticMethodAccess, List<String> objectsList,
         IV8Project v8Project)
     {
         List<FeatureEntry> featureEntries = dynamicFeatureAccessComputer.resolveObject(staticMethodAccess,
@@ -177,7 +197,7 @@ public class ConnectedObjects
         parseStatements(method, objectsList, v8Project);
     }
 
-    private static void parseSimpleStatement(Statement statement, String variableName, EList<String> objectsList,
+    private static void parseSimpleStatement(Statement statement, String variableName, List<String> objectsList,
         Map<String, String> modulesAliases, IV8Project v8Project)
     {
         if (statement instanceof EmptyStatement)
@@ -219,7 +239,7 @@ public class ConnectedObjects
                         firstParam.getName()));
                 }
                 else
-                    parseMethodInAnotherModule(dynamicMethodAccess, objectsList, v8Project);
+                    parseMethodInAnotherModule(dynamicMethodAccess, objectsList, modulesAliases, v8Project);
             }
             else
             {
@@ -230,7 +250,7 @@ public class ConnectedObjects
         }
     }
 
-    private static void parseStatements(Method method, EList<String> objectsList, IV8Project v8Project)
+    private static void parseStatements(Method method, List<String> objectsList, IV8Project v8Project)
     {
         EList<FormalParam> methodParams = method.getFormalParams();
         if (methodParams.isEmpty())

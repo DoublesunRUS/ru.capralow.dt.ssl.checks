@@ -43,28 +43,28 @@ public class MdObjects
         String englishName = ""; //$NON-NLS-1$
 
         if (name.equals("Подсистемы")) //$NON-NLS-1$
-            englishName = "Subsystems"; //$NON-NLS-1$
+            englishName = "Subsystem"; //$NON-NLS-1$
 
         else if (name.equals("ОбщиеМодули")) //$NON-NLS-1$
-            englishName = "CommonModules"; //$NON-NLS-1$
+            englishName = "CommonModule"; //$NON-NLS-1$
 
         else if (name.equals("Справочники")) //$NON-NLS-1$
-            englishName = "Catalogs"; //$NON-NLS-1$
+            englishName = "Catalog"; //$NON-NLS-1$
 
         else if (name.equals("Документы")) //$NON-NLS-1$
-            englishName = "Documents"; //$NON-NLS-1$
+            englishName = "Document"; //$NON-NLS-1$
 
         else if (name.equals("Перечисления")) //$NON-NLS-1$
-            englishName = "Enums"; //$NON-NLS-1$
+            englishName = "Enum"; //$NON-NLS-1$
 
         else if (name.equals("ПланыВидовХарактеристик")) //$NON-NLS-1$
-            englishName = "ChartsOfCharactericticTypes"; //$NON-NLS-1$
+            englishName = "ChartOfCharactericticType"; //$NON-NLS-1$
 
         else if (name.equals("ПланыВидовРасчета")) //$NON-NLS-1$
-            englishName = "ChartOfCalculationTypes"; //$NON-NLS-1$
+            englishName = "ChartOfCalculationType"; //$NON-NLS-1$
 
         else if (name.equals("РегистрыСведений")) //$NON-NLS-1$
-            englishName = "InformationRegisters"; //$NON-NLS-1$
+            englishName = "InformationRegister"; //$NON-NLS-1$
 
         return englishName;
     }

@@ -36,9 +36,11 @@ import com._1c.g5.v8.dt.bsl.model.StaticFeatureAccess;
 import com._1c.g5.v8.dt.bsl.model.StringLiteral;
 import com._1c.g5.v8.dt.bsl.resource.DynamicFeatureAccessComputer;
 import com._1c.g5.v8.dt.core.platform.IV8Project;
+import com._1c.g5.v8.dt.mcore.DerivedProperty;
 import com._1c.g5.v8.dt.mcore.Environmental;
 import com._1c.g5.v8.dt.mcore.TypeItem;
-import com._1c.g5.v8.dt.mcore.util.McoreUtil;
+import com._1c.g5.v8.dt.md.resource.MdTypeUtil;
+import com._1c.g5.v8.dt.metadata.mdclass.BasicDbObject;
 import com._1c.g5.v8.dt.metadata.mdclass.CommonModule;
 import com._1c.g5.v8.dt.metadata.mdclass.DefinedType;
 import com._1c.g5.v8.dt.metadata.mdclass.MdObject;
@@ -74,7 +76,7 @@ public class ConnectedObjects
             return;
 
         for (TypeItem typefromDefinedType : ((DefinedType)mdObject).getType().getTypes())
-            objectsList.add(McoreUtil.getTypeName(typefromDefinedType).replace("Ref", "")); //$NON-NLS-1$ //$NON-NLS-2$
+            objectsList.add(typefromDefinedType.getName());
     }
 
     private static void getFillingObjects(List<String> objectsList, IV8Project v8Project)
@@ -234,9 +236,16 @@ public class ConnectedObjects
                     EList<Expression> params = leftInvocation.getParams();
                     DynamicFeatureAccess firstParam = (DynamicFeatureAccess)params.get(0);
 
-                    objectsList.add(MessageFormat.format(MdObjects.MD_OBJECT,
-                        MdObjects.getEnglishName(((FeatureAccess)firstParam.getSource()).getName()),
-                        firstParam.getName()));
+                    List<FeatureEntry> featureEntries = dynamicFeatureAccessComputer.resolveObject(firstParam,
+                        EcoreUtil2.getContainerOfType(firstParam, Environmental.class).environments());
+                    if (featureEntries.isEmpty())
+                        return;
+                    FeatureEntry featureEntry = featureEntries.get(0);
+                    DerivedProperty deriveredProperty = (DerivedProperty)featureEntry.getFeature();
+                    BasicDbObject objectOwner =
+                        EcoreUtil2.getContainerOfType(deriveredProperty.getSource(), BasicDbObject.class);
+
+                    objectsList.add(MdTypeUtil.getRefType(objectOwner).getName());
                 }
                 else
                     parseMethodInAnotherModule(dynamicMethodAccess, objectsList, modulesAliases, v8Project);

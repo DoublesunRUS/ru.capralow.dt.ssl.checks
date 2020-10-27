@@ -34,6 +34,8 @@ import com._1c.g5.v8.dt.form.model.FormAttribute;
 import com._1c.g5.v8.dt.form.service.FormUtil;
 import com._1c.g5.v8.dt.mcore.TypeItem;
 import com._1c.g5.v8.dt.mcore.util.McoreUtil;
+import com._1c.g5.v8.dt.md.resource.MdTypeUtil;
+import com._1c.g5.v8.dt.metadata.mdclass.BasicDbObject;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
@@ -148,7 +150,7 @@ public class ObjectFormModule
             return ""; //$NON-NLS-1$
         IBmObject moduleObject = moduleReference.getObject().bmGetTopObject();
 
-        return moduleObject.bmGetFqn();
+        return MdTypeUtil.getRefType((BasicDbObject)moduleObject).getName();
     }
 
     private static void validateExecuteCommand(boolean objectConnected, Method method, Module module,

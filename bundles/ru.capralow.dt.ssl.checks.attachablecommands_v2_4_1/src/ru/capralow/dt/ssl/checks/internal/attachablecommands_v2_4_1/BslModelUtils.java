@@ -1,10 +1,9 @@
 /**
  * Copyright (c) 2020, Alexander Kapralov
  */
-package ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1.validator;
+package ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,96 +37,33 @@ import com._1c.g5.v8.dt.bsl.resource.DynamicFeatureAccessComputer;
 import com._1c.g5.v8.dt.core.platform.IV8Project;
 import com._1c.g5.v8.dt.mcore.DerivedProperty;
 import com._1c.g5.v8.dt.mcore.Environmental;
-import com._1c.g5.v8.dt.mcore.TypeItem;
 import com._1c.g5.v8.dt.md.resource.MdTypeUtil;
 import com._1c.g5.v8.dt.metadata.mdclass.BasicDbObject;
 import com._1c.g5.v8.dt.metadata.mdclass.CommonModule;
-import com._1c.g5.v8.dt.metadata.mdclass.DefinedType;
-import com._1c.g5.v8.dt.metadata.mdclass.MdObject;
 import com._1c.g5.v8.dt.metadata.mdclass.Subsystem;
 
-import ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1.MdObjects;
-import ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1.Messages;
-
-public class ConnectedObjects
+public class BslModelUtils
 {
 
     private static DynamicFeatureAccessComputer dynamicFeatureAccessComputer =
         IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(URI.createURI("foo.bsl")).get( //$NON-NLS-1$
             DynamicFeatureAccessComputer.class);
 
-    public static List<String> getAllObjects(IV8Project v8Project)
+    public static void parseStatements(Method method, List<String> objectsList, IV8Project v8Project)
     {
-        List<String> objectsList = new ArrayList<>();
-
-        getAdditionalObjects(objectsList, v8Project);
-        getFillingObjects(objectsList, v8Project);
-        getPrintObjects(objectsList, v8Project);
-        getReportObjects(objectsList, v8Project);
-
-        return objectsList;
-    }
-
-    private static void getAdditionalObjects(List<String> objectsList, IV8Project v8Project)
-    {
-        MdObject mdObject = MdObjects.getMdObject(
-            MessageFormat.format(MdObjects.MD_OBJECT, "ОпределяемыйТип", "ОбъектСДополнительнымиКомандами"), v8Project); //$NON-NLS-1$ //$NON-NLS-2$
-        if (mdObject == null)
+        EList<FormalParam> methodParams = method.getFormalParams();
+        if (methodParams.isEmpty())
             return;
 
-        for (TypeItem typefromDefinedType : ((DefinedType)mdObject).getType().getTypes())
-            objectsList.add(typefromDefinedType.getName());
-    }
+        Map<String, String> modulesAliases = new HashMap<>(); // Поддержка ОбщегоНазначения.ОбщийМодуль()
 
-    private static void getFillingObjects(List<String> objectsList, IV8Project v8Project)
-    {
-        MdObject mdObject = MdObjects.getMdObject(
-            MessageFormat.format(MdObjects.MD_OBJECT, "ОбщийМодуль", "ЗаполнениеОбъектовПереопределяемый"), //$NON-NLS-1$//$NON-NLS-2$
-            v8Project);
-        if (mdObject == null)
-            return;
+        String variableName = methodParams.get(0).getName();
 
-        CommonModule commonModule = (CommonModule)mdObject;
-
-        Method method = MdObjects.getMethod(commonModule.getModule(), "ПриОпределенииОбъектовСКомандамиЗаполнения"); //$NON-NLS-1$
-        if (method == null)
-            return;
-
-        parseStatements(method, objectsList, v8Project);
-    }
-
-    private static void getPrintObjects(List<String> objectsList, IV8Project v8Project)
-    {
-        MdObject mdObject = MdObjects.getMdObject(
-            MessageFormat.format(MdObjects.MD_OBJECT, "ОбщийМодуль", "УправлениеПечатьюПереопределяемый"), //$NON-NLS-1$//$NON-NLS-2$
-            v8Project);
-        if (mdObject == null)
-            return;
-
-        CommonModule commonModule = (CommonModule)mdObject;
-
-        Method method = MdObjects.getMethod(commonModule.getModule(), "ПриОпределенииОбъектовСКомандамиПечати"); //$NON-NLS-1$
-        if (method == null)
-            return;
-
-        parseStatements(method, objectsList, v8Project);
-    }
-
-    private static void getReportObjects(List<String> objectsList, IV8Project v8Project)
-    {
-        MdObject mdObject = MdObjects.getMdObject(
-            MessageFormat.format(MdObjects.MD_OBJECT, "ОбщийМодуль", "ВариантыОтчетовПереопределяемый"), //$NON-NLS-1$//$NON-NLS-2$
-            v8Project);
-        if (mdObject == null)
-            return;
-
-        CommonModule commonModule = (CommonModule)mdObject;
-
-        Method method = MdObjects.getMethod(commonModule.getModule(), "ПриОпределенииОбъектовСКомандамиПечати"); //$NON-NLS-1$
-        if (method == null)
-            return;
-
-        parseStatements(method, objectsList, v8Project);
+        for (Statement statement : method.getStatements())
+            if (statement instanceof IfStatement)
+                parseIfStatement(statement, variableName, objectsList, modulesAliases, v8Project);
+            else
+                parseSimpleStatement(statement, variableName, objectsList, modulesAliases, v8Project);
     }
 
     private static void parseIfStatement(Statement statement, String variableName, List<String> objectsList,
@@ -156,13 +92,13 @@ public class ConnectedObjects
         {
             // "Не установлен плагин SSL Support."
             CommonModule commonModule =
-                (CommonModule)MdObjects.getMdObject(MessageFormat.format(MdObjects.MD_OBJECT, "ОбщийМодуль", //$NON-NLS-1$
+                (CommonModule)MdUtils.getMdObject(MessageFormat.format(MdUtils.MD_OBJECT, "ОбщийМодуль", //$NON-NLS-1$
                     modulesAliases.get(((FeatureAccess)dynamicMethodAccess.getSource()).getName())), v8Project);
 
             if (commonModule == null)
                 return;
 
-            method = MdObjects.getMethod(commonModule.getModule(), dynamicMethodAccess.getName());
+            method = MdUtils.getMethod(commonModule.getModule(), dynamicMethodAccess.getName());
             if (method == null)
                 return;
 
@@ -174,7 +110,7 @@ public class ConnectedObjects
 
             EObject newObject = EcoreFactory.eINSTANCE.createEObject();
             ((InternalEObject)newObject).eSetProxyURI(((SourceObjectLinkProvider)feature).getSourceUri());
-            method = (Method)EcoreUtil.resolve(newObject, MdObjects.getConfigurationForProject(v8Project));
+            method = (Method)EcoreUtil.resolve(newObject, MdUtils.getConfigurationForProject(v8Project));
             if (method.eResource() instanceof DerivedStateAwareResource)
                 ((DerivedStateAwareResource)method.eResource()).installDerivedState(false);
 
@@ -259,23 +195,6 @@ public class ConnectedObjects
         }
     }
 
-    private static void parseStatements(Method method, List<String> objectsList, IV8Project v8Project)
-    {
-        EList<FormalParam> methodParams = method.getFormalParams();
-        if (methodParams.isEmpty())
-            return;
-
-        Map<String, String> modulesAliases = new HashMap<>(); // Поддержка ОбщегоНазначения.ОбщийМодуль()
-
-        String variableName = methodParams.get(0).getName();
-
-        for (Statement statement : method.getStatements())
-            if (statement instanceof IfStatement)
-                parseIfStatement(statement, variableName, objectsList, modulesAliases, v8Project);
-            else
-                parseSimpleStatement(statement, variableName, objectsList, modulesAliases, v8Project);
-    }
-
     private static Boolean parseSubsystemExistsStatement(IfStatement ifStatement, IV8Project v8Project)
     {
         Boolean trueStatement = true;
@@ -296,7 +215,7 @@ public class ConnectedObjects
             for (String stringPart : subsystemLiteral.getLines().get(0).replace("\"", "").split("[.]")) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 subsystemName.append(".").append(stringPart); //$NON-NLS-1$
 
-            Subsystem subsystem = (Subsystem)MdObjects.getMdObject(subsystemName.toString(), v8Project);
+            Subsystem subsystem = (Subsystem)MdUtils.getMdObject(subsystemName.toString(), v8Project);
 
             trueStatement = subsystem != null;
         }
@@ -304,7 +223,7 @@ public class ConnectedObjects
         return trueStatement;
     }
 
-    private ConnectedObjects()
+    private BslModelUtils()
     {
         throw new IllegalStateException(Messages.Internal_class);
     }

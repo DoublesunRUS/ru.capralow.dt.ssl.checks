@@ -39,6 +39,7 @@ import com._1c.g5.v8.dt.metadata.mdclass.BasicDbObject;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
+import ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1.AttacheableObjects;
 import ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1.SslVersionChecker;
 
 public class ObjectFormModule
@@ -359,7 +360,7 @@ public class ObjectFormModule
         if (objectName.isEmpty())
             return;
 
-        List<String> objectsList = ConnectedObjects.getAllObjects(v8Project);
+        List<String> objectsList = AttacheableObjects.getAttacheableObjects(v8Project);
         boolean objectConnected = objectsList.contains(objectName);
 
         Method methodOnCreateAtServer = null;

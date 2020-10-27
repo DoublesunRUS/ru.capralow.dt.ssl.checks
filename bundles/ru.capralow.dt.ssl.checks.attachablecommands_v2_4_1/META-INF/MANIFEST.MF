@@ -25,5 +25,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: ru.capralow.dt.ssl.checks.plugin.core
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %providerName
-Export-Package: ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1;x-internal:=true,
+Export-Package: ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1,
+ ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1;x-internal:=true,
  ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1.validator;x-internal:=true

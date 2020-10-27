@@ -21,7 +21,7 @@ import com._1c.g5.v8.dt.metadata.mdclass.Configuration;
 import com._1c.g5.v8.dt.metadata.mdclass.MdClassPackage;
 import com._1c.g5.v8.dt.metadata.mdclass.MdObject;
 
-public class MdObjects
+public class MdUtils
 {
 
     public static final String MD_OBJECT = "{0}.{1}"; //$NON-NLS-1$
@@ -36,37 +36,6 @@ public class MdObjects
             return ((IExternalObjectProject)v8Project).getParent().getConfiguration();
 
         return null;
-    }
-
-    public static String getEnglishName(String name)
-    {
-        String englishName = ""; //$NON-NLS-1$
-
-        if (name.equals("Подсистемы")) //$NON-NLS-1$
-            englishName = "Subsystem"; //$NON-NLS-1$
-
-        else if (name.equals("ОбщиеМодули")) //$NON-NLS-1$
-            englishName = "CommonModule"; //$NON-NLS-1$
-
-        else if (name.equals("Справочники")) //$NON-NLS-1$
-            englishName = "Catalog"; //$NON-NLS-1$
-
-        else if (name.equals("Документы")) //$NON-NLS-1$
-            englishName = "Document"; //$NON-NLS-1$
-
-        else if (name.equals("Перечисления")) //$NON-NLS-1$
-            englishName = "Enum"; //$NON-NLS-1$
-
-        else if (name.equals("ПланыВидовХарактеристик")) //$NON-NLS-1$
-            englishName = "ChartOfCharactericticType"; //$NON-NLS-1$
-
-        else if (name.equals("ПланыВидовРасчета")) //$NON-NLS-1$
-            englishName = "ChartOfCalculationType"; //$NON-NLS-1$
-
-        else if (name.equals("РегистрыСведений")) //$NON-NLS-1$
-            englishName = "InformationRegister"; //$NON-NLS-1$
-
-        return englishName;
     }
 
     public static MdObject getMdObject(String objectFullName, IV8Project v8Project)
@@ -164,7 +133,7 @@ public class MdObjects
         return mdLiteral;
     }
 
-    private MdObjects()
+    private MdUtils()
     {
         throw new IllegalStateException(Messages.Internal_class);
     }

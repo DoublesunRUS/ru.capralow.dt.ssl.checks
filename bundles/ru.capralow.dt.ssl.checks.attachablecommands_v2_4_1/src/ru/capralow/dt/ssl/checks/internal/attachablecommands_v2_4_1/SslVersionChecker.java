@@ -56,15 +56,15 @@ public class SslVersionChecker
     {
         String version = ""; //$NON-NLS-1$
 
-        MdObject mdObject = MdObjects.getMdObject(
-            MessageFormat.format(MdObjects.MD_OBJECT, "ОбщийМодуль", "ОбновлениеИнформационнойБазыБСП"), //$NON-NLS-2$
+        MdObject mdObject = MdUtils.getMdObject(
+            MessageFormat.format(MdUtils.MD_OBJECT, "ОбщийМодуль", "ОбновлениеИнформационнойБазыБСП"), //$NON-NLS-2$
             v8Project);
         if (mdObject == null)
             return version;
 
         CommonModule commonModule = (CommonModule)mdObject;
 
-        Method method = MdObjects.getMethod(commonModule.getModule(), "ПриДобавленииПодсистемы"); //$NON-NLS-1$
+        Method method = MdUtils.getMethod(commonModule.getModule(), "ПриДобавленииПодсистемы"); //$NON-NLS-1$
         if (method == null)
             return version;
 

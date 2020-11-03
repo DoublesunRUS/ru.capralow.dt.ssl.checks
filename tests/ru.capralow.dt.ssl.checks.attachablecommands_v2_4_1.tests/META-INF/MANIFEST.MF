@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests
-Bundle-SymbolicName: ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1.validator.tests
+Bundle-SymbolicName: ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1.tests
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1;bundle-version="1.0.0.qualifier"
-Automatic-Module-Name: ru.capralow.dt.ssl.checks.core.tests
+Automatic-Module-Name: ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: com._1c.g5.v8.dt.testing,
  org.junit,

@@ -88,7 +88,7 @@ public class AttacheableObjects
 
         CommonModule commonModule = (CommonModule)mdObject;
 
-        Method method = MdUtils.getMethod(commonModule.getModule(), "ПриОпределенииОбъектовСКомандамиПечати"); //$NON-NLS-1$
+        Method method = MdUtils.getMethod(commonModule.getModule(), "ОпределитьОбъектыСКомандамиОтчетов"); //$NON-NLS-1$
         if (method == null)
             return;
 

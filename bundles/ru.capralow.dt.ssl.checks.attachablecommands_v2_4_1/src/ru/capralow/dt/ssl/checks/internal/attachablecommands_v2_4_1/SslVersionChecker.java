@@ -21,14 +21,14 @@ public class SslVersionChecker
     {
         String sslVersion = getSSLVersion(v8Project);
 
-        return compareVersions(startVersion, sslVersion) != 1;
+        return compareVersions(startVersion, sslVersion) == 0;
     }
 
     public static boolean checkSslVersion(IV8Project v8Project, String startVersion, String endVersion)
     {
         String sslVersion = getSSLVersion(v8Project);
 
-        return !(compareVersions(startVersion, sslVersion) == 1 || compareVersions(endVersion, sslVersion) == -1);
+        return (compareVersions(startVersion, sslVersion) != 1 && compareVersions(endVersion, sslVersion) != -1);
     }
 
     private static Integer compareVersions(String version1, String version2)
@@ -37,7 +37,7 @@ public class SslVersionChecker
         String[] levels1 = version1.split("\\."); //$NON-NLS-1$
         String[] levels2 = version2.split("\\."); //$NON-NLS-1$
 
-        Integer length = Math.max(levels1.length, levels2.length);
+        Integer length = Math.min(levels1.length, levels2.length);
         for (Integer i = 0; i < length; i++)
         {
             Integer v1 = i < levels1.length ? Integer.parseInt(levels1[i]) : 0;
@@ -57,7 +57,7 @@ public class SslVersionChecker
         String version = ""; //$NON-NLS-1$
 
         MdObject mdObject = MdUtils.getMdObject(
-            MessageFormat.format(MdUtils.MD_OBJECT, "ОбщийМодуль", "ОбновлениеИнформационнойБазыБСП"), //$NON-NLS-2$
+            MessageFormat.format(MdUtils.MD_OBJECT, "ОбщийМодуль", "ОбновлениеИнформационнойБазыБСП"), //$NON-NLS-1$//$NON-NLS-2$
             v8Project);
         if (mdObject == null)
             return version;

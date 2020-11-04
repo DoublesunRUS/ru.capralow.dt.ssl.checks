@@ -235,7 +235,7 @@ public class ObjectFormModuleReportsTests
     }
 
     @Test
-    public void testMissingMethodsExecuteCommandAtServerMissingCall() throws Exception
+    public void testMissingMethodsExecuteCommandAtServerNoMissingCall() throws Exception
     {
         TestingWorkspaceUtils.checkNoIssue("v2_4_1", "src/Documents/ОтчетыБезПроцедур/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$//$NON-NLS-2$
             ObjectFormModule.ERROR_METHOD_EXECUTE_COMMAND_AT_SERVER_MISSING_CALL);
@@ -249,7 +249,7 @@ public class ObjectFormModuleReportsTests
     }
 
     @Test
-    public void testMissingMethodsExecuteCommandMissingCall() throws Exception
+    public void testMissingMethodsExecuteCommandNoMissingCall() throws Exception
     {
         TestingWorkspaceUtils.checkNoIssue("v2_4_1", "src/Documents/ОтчетыБезПроцедур/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$//$NON-NLS-2$
             ObjectFormModule.ERROR_METHOD_EXECUTE_COMMAND_MISSING_CALL);
@@ -263,7 +263,7 @@ public class ObjectFormModuleReportsTests
     }
 
     @Test
-    public void testMissingMethodsOnCreateAtServerMissingCall() throws Exception
+    public void testMissingMethodsOnCreateAtServerNoMissingCall() throws Exception
     {
         TestingWorkspaceUtils.checkNoIssue("v2_4_1", "src/Documents/ОтчетыБезПроцедур/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$//$NON-NLS-2$
             ObjectFormModule.ERROR_METHOD_ON_CREATE_AT_SERVER_MISSING_CALL);
@@ -277,7 +277,7 @@ public class ObjectFormModuleReportsTests
     }
 
     @Test
-    public void testMissingMethodsOnOpenMissingCall() throws Exception
+    public void testMissingMethodsOnOpenNoMissingCall() throws Exception
     {
         TestingWorkspaceUtils.checkNoIssue("v2_4_1", "src/Documents/ОтчетыБезПроцедур/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$//$NON-NLS-2$
             ObjectFormModule.ERROR_METHOD_ON_OPEN_MISSING_CALL);
@@ -291,7 +291,7 @@ public class ObjectFormModuleReportsTests
     }
 
     @Test
-    public void testMissingMethodsOnReadAtServerMissingCall() throws Exception
+    public void testMissingMethodsOnReadAtServerNoMissingCall() throws Exception
     {
         TestingWorkspaceUtils.checkNoIssue("v2_4_1", "src/Documents/ОтчетыБезПроцедур/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$//$NON-NLS-2$
             ObjectFormModule.ERROR_METHOD_ON_READ_AT_SERVER_MISSING_CALL);
@@ -305,7 +305,7 @@ public class ObjectFormModuleReportsTests
     }
 
     @Test
-    public void testMissingMethodsRereadCommandsMissingCall() throws Exception
+    public void testMissingMethodsRereadCommandsNoMissingCall() throws Exception
     {
         TestingWorkspaceUtils.checkNoIssue("v2_4_1", "src/Documents/ОтчетыБезПроцедур/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$//$NON-NLS-2$
             ObjectFormModule.ERROR_METHOD_REREAD_COMMANDS_MISSING_CALL);

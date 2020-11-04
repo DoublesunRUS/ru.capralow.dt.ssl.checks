@@ -259,7 +259,7 @@ public class ObjectFormModuleFillingsTests
     }
 
     @Test
-    public void testMissingMethodsExecuteCommandAtServerMissingCall() throws Exception
+    public void testMissingMethodsExecuteCommandAtServerNoMissingCall() throws Exception
     {
         TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
             "src/Documents/ЗаполнениеБезПроцедур/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
@@ -275,7 +275,7 @@ public class ObjectFormModuleFillingsTests
     }
 
     @Test
-    public void testMissingMethodsExecuteCommandMissingCall() throws Exception
+    public void testMissingMethodsExecuteCommandNoMissingCall() throws Exception
     {
         TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
             "src/Documents/ЗаполнениеБезПроцедур/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
@@ -291,7 +291,7 @@ public class ObjectFormModuleFillingsTests
     }
 
     @Test
-    public void testMissingMethodsOnCreateAtServerMissingCall() throws Exception
+    public void testMissingMethodsOnCreateAtServerNoMissingCall() throws Exception
     {
         TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
             "src/Documents/ЗаполнениеБезПроцедур/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
@@ -307,7 +307,7 @@ public class ObjectFormModuleFillingsTests
     }
 
     @Test
-    public void testMissingMethodsOnOpenMissingCall() throws Exception
+    public void testMissingMethodsOnOpenNoMissingCall() throws Exception
     {
         TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
             "src/Documents/ЗаполнениеБезПроцедур/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
@@ -323,7 +323,7 @@ public class ObjectFormModuleFillingsTests
     }
 
     @Test
-    public void testMissingMethodsOnReadAtServerMissingCall() throws Exception
+    public void testMissingMethodsOnReadAtServerNoMissingCall() throws Exception
     {
         TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
             "src/Documents/ЗаполнениеБезПроцедур/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
@@ -339,7 +339,7 @@ public class ObjectFormModuleFillingsTests
     }
 
     @Test
-    public void testMissingMethodsRereadCommandsMissingCall() throws Exception
+    public void testMissingMethodsRereadCommandsNoMissingCall() throws Exception
     {
         TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
             "src/Documents/ЗаполнениеБезПроцедур/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$

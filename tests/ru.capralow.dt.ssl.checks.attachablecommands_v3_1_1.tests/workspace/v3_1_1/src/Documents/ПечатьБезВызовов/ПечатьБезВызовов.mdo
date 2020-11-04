@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Document xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="f87cd364-9be8-4dbc-9050-b58c556f7c86">
+  <producedTypes>
+    <objectType typeId="9cff23ed-9d79-4eb9-aa75-2047f62202a3" valueTypeId="5fa4f33e-f938-4387-8ae2-eb9f2c051b44"/>
+    <refType typeId="e0631f1e-58f9-4d75-9943-559247dadae3" valueTypeId="88a02c67-e9d1-446b-b871-55ea690d1285"/>
+    <selectionType typeId="2d4f1927-dfe4-47a7-84a4-a343dcb5543d" valueTypeId="64352469-e338-4b14-9d82-ca8deff0029c"/>
+    <listType typeId="19069a99-e6f9-40d4-a375-3a0bdeb3759c" valueTypeId="dee033c3-cb47-4721-9e2a-de55fef17963"/>
+    <managerType typeId="fb0fd771-8372-47ea-a1b4-01fb465caaf4" valueTypeId="be9e8ec2-4809-47fe-a419-fcac7e40a8ec"/>
+  </producedTypes>
+  <name>ПечатьБезВызовов</name>
+  <synonym>
+    <key>ru</key>
+    <value>Печать без вызовов</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <inputByString>Document.ПечатьБезВызовов.StandardAttribute.Number</inputByString>
+  <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
+  <createOnInput>Use</createOnInput>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <fullTextSearch>Use</fullTextSearch>
+  <numberType>String</numberType>
+  <numberLength>9</numberLength>
+  <numberAllowedLength>Variable</numberAllowedLength>
+  <checkUnique>true</checkUnique>
+  <autonumbering>true</autonumbering>
+  <defaultObjectForm>Document.ПечатьБезВызовов.Form.ФормаДокумента</defaultObjectForm>
+  <defaultListForm>Document.ПечатьБезВызовов.Form.ФормаСписка</defaultListForm>
+  <postInPrivilegedMode>true</postInPrivilegedMode>
+  <unpostInPrivilegedMode>true</unpostInPrivilegedMode>
+  <forms uuid="aeea4eee-c000-4712-aed9-445baa68cb77">
+    <name>ФормаДокумента</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма документа</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+  <forms uuid="f8e3f1e6-8af8-46a6-ad05-e957d5379082">
+    <name>ФормаСписка</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма списка</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:Document>

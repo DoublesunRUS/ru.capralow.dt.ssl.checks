@@ -39,8 +39,8 @@ import com._1c.g5.v8.dt.metadata.mdclass.BasicDbObject;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
+import ru.capralow.dt.ssl.checks.SslVersionChecker;
 import ru.capralow.dt.ssl.checks.attachablecommands_v3_1_1.AttacheableObjects;
-import ru.capralow.dt.ssl.checks.internal.attachablecommands_v3_1_1.SslVersionChecker;
 
 public class ObjectFormModule
     implements IExternalBslValidator

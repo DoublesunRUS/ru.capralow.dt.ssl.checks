@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2020, Alexander Kapralov
  */
-package ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1;
+package ru.capralow.dt.ssl.checks;
 
 import java.text.MessageFormat;
 

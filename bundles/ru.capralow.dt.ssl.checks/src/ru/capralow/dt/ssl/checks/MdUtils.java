@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2020, Alexander Kapralov
  */
-package ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1;
+package ru.capralow.dt.ssl.checks;
 
 import java.util.Iterator;
 
@@ -21,6 +21,8 @@ import com._1c.g5.v8.dt.metadata.mdclass.Configuration;
 import com._1c.g5.v8.dt.metadata.mdclass.MdClassPackage;
 import com._1c.g5.v8.dt.metadata.mdclass.MdObject;
 
+import ru.capralow.dt.ssl.checks.internal.SslPlugin;
+
 public class MdUtils
 {
 
@@ -34,40 +36,6 @@ public class MdUtils
             return ((IExtensionProject)v8Project).getConfiguration();
         else if (v8Project instanceof IExternalObjectProject)
             return ((IExternalObjectProject)v8Project).getParent().getConfiguration();
-
-        return null;
-    }
-
-    public static MdObject getMdObject(String objectFullName, IV8Project v8Project)
-    {
-        IBmEmfIndexManager bmEmfIndexManager =
-            AttacheableCommandsPlugin.getInstance().getInjector().getInstance(IBmEmfIndexManager.class);
-        IBmEmfIndexProvider bmEmfIndexProvider = bmEmfIndexManager.getEmfIndexProvider(v8Project.getProject());
-
-        EClass mdLiteral = getMdLiteral(objectFullName);
-        QualifiedName qnObjectName = getConfigurationObjectQualifiedName(objectFullName, mdLiteral);
-
-        MdObject object = null;
-
-        Iterable<IEObjectDescription> objectIndex =
-            bmEmfIndexProvider.getEObjectIndexByType(mdLiteral, qnObjectName, true);
-        Iterator<IEObjectDescription> objectItr = objectIndex.iterator();
-        if (objectItr.hasNext())
-            object = (MdObject)objectItr.next().getEObjectOrProxy();
-
-        if (object == null)
-            return null;
-
-        return object;
-    }
-
-    public static Method getMethod(Module mdModule, String methodName)
-    {
-        for (Method mdMethod : mdModule.allMethods())
-        {
-            if (mdMethod.getName().equals(methodName))
-                return mdMethod;
-        }
 
         return null;
     }
@@ -131,6 +99,40 @@ public class MdUtils
             mdLiteral = MdClassPackage.Literals.INFORMATION_REGISTER;
 
         return mdLiteral;
+    }
+
+    public static MdObject getMdObject(String objectFullName, IV8Project v8Project)
+    {
+        IBmEmfIndexManager bmEmfIndexManager =
+            SslPlugin.getInstance().getInjector().getInstance(IBmEmfIndexManager.class);
+        IBmEmfIndexProvider bmEmfIndexProvider = bmEmfIndexManager.getEmfIndexProvider(v8Project.getProject());
+
+        EClass mdLiteral = getMdLiteral(objectFullName);
+        QualifiedName qnObjectName = getConfigurationObjectQualifiedName(objectFullName, mdLiteral);
+
+        MdObject object = null;
+
+        Iterable<IEObjectDescription> objectIndex =
+            bmEmfIndexProvider.getEObjectIndexByType(mdLiteral, qnObjectName, true);
+        Iterator<IEObjectDescription> objectItr = objectIndex.iterator();
+        if (objectItr.hasNext())
+            object = (MdObject)objectItr.next().getEObjectOrProxy();
+
+        if (object == null)
+            return null;
+
+        return object;
+    }
+
+    public static Method getMethod(Module mdModule, String methodName)
+    {
+        for (Method mdMethod : mdModule.allMethods())
+        {
+            if (mdMethod.getName().equals(methodName))
+                return mdMethod;
+        }
+
+        return null;
     }
 
     private MdUtils()

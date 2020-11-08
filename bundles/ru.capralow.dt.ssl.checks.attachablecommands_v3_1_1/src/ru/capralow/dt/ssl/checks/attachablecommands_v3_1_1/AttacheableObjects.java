@@ -14,8 +14,8 @@ import com._1c.g5.v8.dt.metadata.mdclass.CommonModule;
 import com._1c.g5.v8.dt.metadata.mdclass.DefinedType;
 import com._1c.g5.v8.dt.metadata.mdclass.MdObject;
 
-import ru.capralow.dt.ssl.checks.internal.attachablecommands_v3_1_1.BslModelUtils;
-import ru.capralow.dt.ssl.checks.internal.attachablecommands_v3_1_1.MdUtils;
+import ru.capralow.dt.ssl.checks.BslModelUtils;
+import ru.capralow.dt.ssl.checks.MdUtils;
 import ru.capralow.dt.ssl.checks.internal.attachablecommands_v3_1_1.Messages;
 
 public class AttacheableObjects

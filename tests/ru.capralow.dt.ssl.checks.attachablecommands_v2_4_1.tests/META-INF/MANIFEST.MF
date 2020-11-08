@@ -6,10 +6,11 @@ Bundle-Version: 1.0.0.qualifier
 Fragment-Host: ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1;bundle-version="1.0.0.qualifier"
 Automatic-Module-Name: ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-11
-Require-Bundle: com._1c.g5.v8.dt.testing,
- org.junit,
- org.eclipse.core.resources,
- com._1c.g5.v8.dt.core,
- com._1c.g5.ides.core
 Export-Package: ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1.tests;x-internal:=true,
  ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1.validator.tests;x-internal:=true
+Require-Bundle: org.junit;bundle-version="[4.13.0,5.0.0)",
+ org.eclipse.core.resources;bundle-version="[3.13.700,4.0.0)",
+ com._1c.g5.v8.dt.core;bundle-version="[16.0.0,17.0.0)",
+ com._1c.g5.v8.dt.testing;bundle-version="[3.1.1300,4.0.0)",
+ com._1c.g5.ides.core;bundle-version="[6.0.300,7.0.0)"
+Import-Package: com._1c.g5.v8.dt.bsl.resource;version="[12.0.0,13.0.0)"

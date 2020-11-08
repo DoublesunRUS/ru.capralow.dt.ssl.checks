@@ -12,8 +12,8 @@ import com._1c.g5.v8.dt.core.platform.IV8Project;
 import com._1c.g5.v8.dt.core.platform.IV8ProjectManager;
 import com._1c.g5.v8.dt.testing.TestingWorkspace;
 
+import ru.capralow.dt.ssl.checks.SslVersionChecker;
 import ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1.AttacheableCommandsPlugin;
-import ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1.SslVersionChecker;
 
 public class SslVersionCheckerTests
 {

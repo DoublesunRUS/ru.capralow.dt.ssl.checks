@@ -4,7 +4,7 @@
    <extension
          point="com._1c.g5.v8.dt.bsl.externalBslValidator">
       <externalValidator
-            class="ru.capralow.dt.ssl.checks.internal.attachablecommands_v3_1_1.ExecutableExtensionFactory:ru.capralow.dt.ssl.checks.internal.attachablecommands_v3_1_1.validator.ObjectFormModule">
+            class="ru.capralow.dt.ssl.checks.internal.attachablecommands_v3_1_1.ExecutableExtensionFactory:ru.capralow.dt.ssl.checks.attachablecommands_v3_1_1.validator.ObjectFormModuleValidator">
       </externalValidator>
    </extension>
 </plugin>

@@ -6,8 +6,8 @@ Bundle-Version: 1.0.0.qualifier
 Fragment-Host: ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1;bundle-version="1.0.0.qualifier"
 Automatic-Module-Name: ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-11
-Export-Package: ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1.tests;x-internal:=true,
- ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1.validator.tests;x-internal:=true
+Export-Package: ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1.validator.tests,
+ ru.capralow.dt.ssl.checks.internal.attachablecommands_v2_4_1.tests;x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.13.0,5.0.0)",
  org.eclipse.core.resources;bundle-version="[3.13.700,4.0.0)",
  com._1c.g5.v8.dt.core;bundle-version="[16.0.0,17.0.0)",

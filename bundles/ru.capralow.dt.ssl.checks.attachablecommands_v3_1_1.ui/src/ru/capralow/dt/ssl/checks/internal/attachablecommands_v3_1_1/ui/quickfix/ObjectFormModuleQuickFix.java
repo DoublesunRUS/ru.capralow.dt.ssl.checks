@@ -3,26 +3,25 @@
  */
 package ru.capralow.dt.ssl.checks.internal.attachablecommands_v3_1_1.ui.quickfix;
 
-import org.eclipse.core.runtime.IProgressMonitor;
+import java.util.List;
+
+import org.eclipse.text.edits.InsertEdit;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
+import org.eclipse.xtext.nodemodel.INode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.ui.editor.quickfix.Fix;
 import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor;
 import org.eclipse.xtext.validation.Issue;
 
-import com._1c.g5.v8.bm.core.IBmTransaction;
-import com._1c.g5.v8.bm.integration.AbstractBmTask;
-import com._1c.g5.v8.bm.integration.IBmModel;
+import com._1c.g5.v8.dt.bsl.model.BslPackage;
 import com._1c.g5.v8.dt.bsl.model.Method;
 import com._1c.g5.v8.dt.bsl.ui.quickfix.AbstractExternalQuickfixProvider;
-import com._1c.g5.v8.dt.core.platform.IBmModelManager;
-import com.google.inject.Inject;
 
 import ru.capralow.dt.ssl.checks.attachablecommands_v3_1_1.validator.ObjectFormModuleValidator;
 
 public class ObjectFormModuleQuickFix
     extends AbstractExternalQuickfixProvider
 {
-    @Inject
-    private IBmModelManager bmModelManager;
 
     @Fix(ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_AT_SERVER_MISSING_EXPORT)
     public void addExport(final Issue issue, final IssueResolutionAcceptor acceptor)
@@ -31,24 +30,19 @@ public class ObjectFormModuleQuickFix
             Messages.Error_ObjectFormModule_MethodExecuteCommandAtServerMissingExport_Description, null,
             new ExternalQuickfixModification<>(issue, Method.class, method -> {
 
-                IBmModel model = bmModelManager.getModel(method);
-                if (model == null)
+                List<INode> paramNodes =
+                    NodeModelUtils.findNodesForFeature(method, BslPackage.Literals.METHOD__FORMAL_PARAMS);
+                if (paramNodes == null || paramNodes.isEmpty())
                     return null;
 
-                model.getGlobalContext().execute(new AbstractBmTask<Void>(
-                    Messages.Error_ObjectFormModule_MethodExecuteCommandAtServerMissingExport_Title)
-                {
-                    @Override
-                    public Void execute(IBmTransaction transaction, IProgressMonitor monitor)
-                    {
+                ICompositeNode methodNode = NodeModelUtils.getNode(method);
+                INode lastParamNode = paramNodes.get(paramNodes.size() - 1);
+                int endOffset = lastParamNode.getTotalEndOffset() - methodNode.getTotalOffset();
+                String methodText = methodNode.getText().substring(endOffset);
+                int paramsEndOffset = methodText.indexOf(')');
+                int insertOffset = methodNode.getTotalOffset() + endOffset + paramsEndOffset + 1;
 
-                        Method editing = transaction.toTransactionObject(method);
-                        editing.setExport(true);
-                        return null;
-                    }
-                });
-
-                return null;
+                return new InsertEdit(insertOffset, " Экспорт"); //$NON-NLS-1$
             }));
     }
 }

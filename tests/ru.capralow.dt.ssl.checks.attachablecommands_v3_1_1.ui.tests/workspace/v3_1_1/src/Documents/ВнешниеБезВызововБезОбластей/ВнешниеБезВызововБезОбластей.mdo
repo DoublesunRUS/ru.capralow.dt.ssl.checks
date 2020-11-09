@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Document xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="bda3bf7a-cb52-4220-b967-9bd4c88d6e7b">
+  <producedTypes>
+    <objectType typeId="082419ec-21c2-4976-83cb-0d246b1a89a0" valueTypeId="ddcbb711-0173-472b-b3ad-36af36298508"/>
+    <refType typeId="52e444c9-01c9-4cb8-b4dd-d671b43ff847" valueTypeId="e36853fd-2e13-4d06-b4f6-e2d9e38ece96"/>
+    <selectionType typeId="53aceb7d-8870-4df4-ae19-b9f7e0800e5e" valueTypeId="e91d405d-31e6-4bac-ac37-288f38e46d65"/>
+    <listType typeId="6b3c264c-bc53-434b-9453-98a19a0f6e25" valueTypeId="c4168fee-1ff0-4855-934d-1ce0827766a8"/>
+    <managerType typeId="35813387-62e2-4245-80ca-6807945f7920" valueTypeId="9f13c34c-b1fb-4f00-acff-c5c2348724fe"/>
+  </producedTypes>
+  <name>ВнешниеБезВызововБезОбластей</name>
+  <synonym>
+    <key>ru</key>
+    <value>Внешние без вызовов без областей</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <inputByString>Document.ВнешниеБезВызововБезОбластей.StandardAttribute.Number</inputByString>
+  <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
+  <createOnInput>Use</createOnInput>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <fullTextSearch>Use</fullTextSearch>
+  <numberType>String</numberType>
+  <numberLength>9</numberLength>
+  <numberAllowedLength>Variable</numberAllowedLength>
+  <checkUnique>true</checkUnique>
+  <autonumbering>true</autonumbering>
+  <defaultObjectForm>Document.ВнешниеБезВызововБезОбластей.Form.ФормаДокумента</defaultObjectForm>
+  <defaultListForm>Document.ВнешниеБезВызововБезОбластей.Form.ФормаСписка</defaultListForm>
+  <postInPrivilegedMode>true</postInPrivilegedMode>
+  <unpostInPrivilegedMode>true</unpostInPrivilegedMode>
+  <forms uuid="1eb665c6-1c52-4c1a-aa04-faf9bab24be9">
+    <name>ФормаДокумента</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма документа</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+  <forms uuid="b1aa1c51-7bc4-4b01-a8cc-765e7eca36db">
+    <name>ФормаСписка</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма списка</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:Document>

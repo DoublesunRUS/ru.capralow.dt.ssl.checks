@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Document xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="e53e9fb7-b2e1-4a72-b2ab-210f76c2cb3c">
+  <producedTypes>
+    <objectType typeId="2b353420-3cdc-45f6-8c64-ad92d7437fc6" valueTypeId="cf08c29e-16c7-4780-b66f-cb67d4fd5b9c"/>
+    <refType typeId="5eeff5e2-2786-492d-b988-b14a628ed481" valueTypeId="6382049e-32be-4a2a-939b-257ffc86c623"/>
+    <selectionType typeId="b1cb2347-c94a-4802-b182-b1e2be28dc5b" valueTypeId="cba52790-ef0d-45a8-b4f6-8495b2a80877"/>
+    <listType typeId="2aa9c97b-2f72-4f5f-b3ff-dc48f4c453d5" valueTypeId="eea3bf5a-b82d-4dd9-876a-f6bd99e090ce"/>
+    <managerType typeId="acc29c14-7e05-4d73-993a-2abcd8f089d7" valueTypeId="e512532e-3340-44de-9e0d-635b27d210db"/>
+  </producedTypes>
+  <name>НенужныеПроцедурыИВызовыБезОбластей</name>
+  <synonym>
+    <key>ru</key>
+    <value>Ненужные процедуры и вызовы без областей</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <inputByString>Document.НенужныеПроцедурыИВызовыБезОбластей.StandardAttribute.Number</inputByString>
+  <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
+  <createOnInput>Use</createOnInput>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <fullTextSearch>Use</fullTextSearch>
+  <numberType>String</numberType>
+  <numberLength>9</numberLength>
+  <numberAllowedLength>Variable</numberAllowedLength>
+  <checkUnique>true</checkUnique>
+  <autonumbering>true</autonumbering>
+  <defaultObjectForm>Document.НенужныеПроцедурыИВызовыБезОбластей.Form.ФормаДокумента</defaultObjectForm>
+  <defaultListForm>Document.НенужныеПроцедурыИВызовыБезОбластей.Form.ФормаСписка</defaultListForm>
+  <postInPrivilegedMode>true</postInPrivilegedMode>
+  <unpostInPrivilegedMode>true</unpostInPrivilegedMode>
+  <forms uuid="e8acd458-f740-4882-9e87-efef6553b0b5">
+    <name>ФормаДокумента</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма документа</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+  <forms uuid="cc2bc4a7-a8a4-4920-a0a8-c71a8765c7dc">
+    <name>ФормаСписка</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма списка</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:Document>

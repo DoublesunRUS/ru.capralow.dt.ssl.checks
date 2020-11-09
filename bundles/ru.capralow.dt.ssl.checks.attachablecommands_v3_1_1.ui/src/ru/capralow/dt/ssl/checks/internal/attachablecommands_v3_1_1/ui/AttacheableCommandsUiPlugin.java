@@ -13,12 +13,12 @@ import org.osgi.framework.BundleContext;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-public class AttacheableCommandsPlugin
+public class AttacheableCommandsUiPlugin
     extends AbstractUIPlugin
 {
-    public static final String ID = "ru.capralow.dt.ssl.checks.attacheablecommands"; //$NON-NLS-1$
+    public static final String ID = "ru.capralow.dt.ssl.checks.attacheablecommands.ui"; //$NON-NLS-1$
 
-    private static AttacheableCommandsPlugin instance;
+    private static AttacheableCommandsUiPlugin instance;
 
     public static IStatus createErrorStatus(String message)
     {
@@ -40,7 +40,7 @@ public class AttacheableCommandsPlugin
         return new Status(IStatus.ERROR, ID, 0, message, throwable);
     }
 
-    public static AttacheableCommandsPlugin getInstance()
+    public static AttacheableCommandsUiPlugin getInstance()
     {
         return instance;
     }

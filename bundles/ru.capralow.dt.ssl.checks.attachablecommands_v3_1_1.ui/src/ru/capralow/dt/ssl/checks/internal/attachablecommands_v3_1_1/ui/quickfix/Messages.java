@@ -11,8 +11,10 @@ final class Messages
     private static final String BUNDLE_NAME =
         "ru.capralow.dt.ssl.checks.internal.attachablecommands_v3_1_1.ui.quickfix.messages"; //$NON-NLS-1$
 
-    public static String Error_ObjectFormModule_MethodOnCreateAtServerNotExists;
-    public static String Error_ObjectFormModule_MethodOnReadAtServerNotExists;
+    public static String Error_ObjectFormModule_MethodOnCreateAtServerNotExists_Title;
+    public static String Error_ObjectFormModule_MethodOnCreateAtServerNotExists_Description;
+    public static String Error_ObjectFormModule_MethodOnReadAtServerNotExists_Title;
+    public static String Error_ObjectFormModule_MethodOnReadAtServerNotExists_Description;
     public static String Error_ObjectFormModule_MethodOnOpenNotExists;
     public static String Error_ObjectFormModule_MethodExecuteCommandNotExists;
     public static String Error_ObjectFormModule_MethodExecuteCommandAtServerNotExists;

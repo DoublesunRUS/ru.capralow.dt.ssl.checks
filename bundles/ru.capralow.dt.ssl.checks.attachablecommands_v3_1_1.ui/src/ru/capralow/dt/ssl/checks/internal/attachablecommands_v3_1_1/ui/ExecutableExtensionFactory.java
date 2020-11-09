@@ -15,13 +15,13 @@ public class ExecutableExtensionFactory
     @Override
     protected Bundle getBundle()
     {
-        return AttacheableCommandsPlugin.getInstance().getBundle();
+        return AttacheableCommandsUiPlugin.getInstance().getBundle();
     }
 
     @Override
     protected Injector getInjector()
     {
-        return AttacheableCommandsPlugin.getInstance().getInjector();
+        return AttacheableCommandsUiPlugin.getInstance().getInjector();
     }
 
 }

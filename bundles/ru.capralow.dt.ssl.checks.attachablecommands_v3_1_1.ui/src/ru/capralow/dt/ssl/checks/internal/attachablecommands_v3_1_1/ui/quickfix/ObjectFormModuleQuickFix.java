@@ -47,10 +47,8 @@ public class ObjectFormModuleQuickFix
 
     static
     {
-        onCreateAtServerTemplateContentRu = readContents(getFileInputSupplier(ON_CREATE_AT_SERVER_TEMPLATE_NAME_RU),
-            ON_CREATE_AT_SERVER_TEMPLATE_NAME_RU);
-        onCreateAtServerTemplateContentEn = readContents(getFileInputSupplier(ON_CREATE_AT_SERVER_TEMPLATE_NAME_EN),
-            ON_CREATE_AT_SERVER_TEMPLATE_NAME_EN);
+        onCreateAtServerTemplateContentRu = readContents(getFileInputSupplier(ON_CREATE_AT_SERVER_TEMPLATE_NAME_RU));
+        onCreateAtServerTemplateContentEn = readContents(getFileInputSupplier(ON_CREATE_AT_SERVER_TEMPLATE_NAME_EN));
     }
 
     private static final String ON_CREATE_AT_SERVER_CALL_TEMPLATE_NAME_RU = "OnCreateAtServerCallRu.txt"; //$NON-NLS-1$
@@ -60,10 +58,10 @@ public class ObjectFormModuleQuickFix
 
     static
     {
-        onCreateAtServerCallTemplateContentRu = readContents(
-            getFileInputSupplier(ON_CREATE_AT_SERVER_CALL_TEMPLATE_NAME_RU), ON_CREATE_AT_SERVER_CALL_TEMPLATE_NAME_RU);
-        onCreateAtServerCallTemplateContentEn = readContents(
-            getFileInputSupplier(ON_CREATE_AT_SERVER_CALL_TEMPLATE_NAME_EN), ON_CREATE_AT_SERVER_CALL_TEMPLATE_NAME_EN);
+        onCreateAtServerCallTemplateContentRu =
+            readContents(getFileInputSupplier(ON_CREATE_AT_SERVER_CALL_TEMPLATE_NAME_RU));
+        onCreateAtServerCallTemplateContentEn =
+            readContents(getFileInputSupplier(ON_CREATE_AT_SERVER_CALL_TEMPLATE_NAME_EN));
     }
 
     private static final String ON_READ_AT_SERVER_TEMPLATE_NAME_RU = "OnReadAtServerRu.txt"; //$NON-NLS-1$
@@ -73,10 +71,8 @@ public class ObjectFormModuleQuickFix
 
     static
     {
-        onReadAtServerTemplateContentRu =
-            readContents(getFileInputSupplier(ON_READ_AT_SERVER_TEMPLATE_NAME_RU), ON_READ_AT_SERVER_TEMPLATE_NAME_RU);
-        onReadAtServerTemplateContentEn =
-            readContents(getFileInputSupplier(ON_READ_AT_SERVER_TEMPLATE_NAME_EN), ON_READ_AT_SERVER_TEMPLATE_NAME_EN);
+        onReadAtServerTemplateContentRu = readContents(getFileInputSupplier(ON_READ_AT_SERVER_TEMPLATE_NAME_RU));
+        onReadAtServerTemplateContentEn = readContents(getFileInputSupplier(ON_READ_AT_SERVER_TEMPLATE_NAME_EN));
     }
 
     private static final String ON_READ_AT_SERVER_CALL_TEMPLATE_NAME_RU = "OnReadAtServerCallRu.txt"; //$NON-NLS-1$
@@ -86,10 +82,10 @@ public class ObjectFormModuleQuickFix
 
     static
     {
-        onReadAtServerCallTemplateContentRu = readContents(
-            getFileInputSupplier(ON_READ_AT_SERVER_CALL_TEMPLATE_NAME_RU), ON_READ_AT_SERVER_CALL_TEMPLATE_NAME_RU);
-        onReadAtServerCallTemplateContentEn = readContents(
-            getFileInputSupplier(ON_READ_AT_SERVER_CALL_TEMPLATE_NAME_EN), ON_READ_AT_SERVER_CALL_TEMPLATE_NAME_EN);
+        onReadAtServerCallTemplateContentRu =
+            readContents(getFileInputSupplier(ON_READ_AT_SERVER_CALL_TEMPLATE_NAME_RU));
+        onReadAtServerCallTemplateContentEn =
+            readContents(getFileInputSupplier(ON_READ_AT_SERVER_CALL_TEMPLATE_NAME_EN));
     }
 
     private static CharSource getFileInputSupplier(String partName)
@@ -98,7 +94,7 @@ public class ObjectFormModuleQuickFix
             StandardCharsets.UTF_8);
     }
 
-    private static String readContents(CharSource source, String path)
+    private static String readContents(CharSource source)
     {
         try (Reader reader = source.openBufferedStream())
         {

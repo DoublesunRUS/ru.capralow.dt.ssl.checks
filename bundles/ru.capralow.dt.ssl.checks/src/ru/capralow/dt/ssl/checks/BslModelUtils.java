@@ -15,9 +15,13 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.EcoreUtil2;
+import org.eclipse.xtext.nodemodel.ILeafNode;
+import org.eclipse.xtext.nodemodel.INode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.resource.DerivedStateAwareResource;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
 
+import com._1c.g5.v8.dt.bsl.model.BslPackage;
 import com._1c.g5.v8.dt.bsl.model.Conditional;
 import com._1c.g5.v8.dt.bsl.model.DynamicFeatureAccess;
 import com._1c.g5.v8.dt.bsl.model.EmptyStatement;
@@ -37,6 +41,7 @@ import com._1c.g5.v8.dt.bsl.resource.DynamicFeatureAccessComputer;
 import com._1c.g5.v8.dt.core.platform.IV8Project;
 import com._1c.g5.v8.dt.mcore.DerivedProperty;
 import com._1c.g5.v8.dt.mcore.Environmental;
+import com._1c.g5.v8.dt.mcore.McorePackage;
 import com._1c.g5.v8.dt.md.resource.MdTypeUtil;
 import com._1c.g5.v8.dt.metadata.mdclass.BasicDbObject;
 import com._1c.g5.v8.dt.metadata.mdclass.CommonModule;
@@ -48,6 +53,33 @@ public class BslModelUtils
     private static DynamicFeatureAccessComputer dynamicFeatureAccessComputer =
         IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(URI.createURI("foo.bsl")).get( //$NON-NLS-1$
             DynamicFeatureAccessComputer.class);
+
+    public static INode getEndBracketParamsNode(Method method)
+    {
+        List<INode> nodesBefore = null;
+        if (!method.getFormalParams().isEmpty())
+            nodesBefore = NodeModelUtils.findNodesForFeature(method, BslPackage.Literals.METHOD__FORMAL_PARAMS);
+        else
+            nodesBefore = NodeModelUtils.findNodesForFeature(method, McorePackage.Literals.NAMED_ELEMENT__NAME);
+
+        if (nodesBefore.isEmpty())
+            return null;
+
+        int searchFrom = nodesBefore.get(nodesBefore.size() - 1).getTotalEndOffset();
+        INode methodNode = NodeModelUtils.findActualNodeFor(method);
+        INode bracketNode = null;
+        for (ILeafNode leafNode : methodNode.getLeafNodes())
+        {
+            if (leafNode.getOffset() < searchFrom || leafNode.isHidden() || leafNode.getLength() > 1)
+                continue;
+            if (")".equals(leafNode.getText())) //$NON-NLS-1$
+            {
+                bracketNode = leafNode;
+                break;
+            }
+        }
+        return bracketNode;
+    }
 
     private static void parseIfStatement(Statement statement, String variableName, List<String> objectsList,
         Map<String, String> modulesAliases, IV8Project v8Project)

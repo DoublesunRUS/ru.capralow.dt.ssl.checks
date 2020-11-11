@@ -12,8 +12,14 @@ import java.util.Optional;
 import org.antlr.stringtemplate.StringTemplate;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.text.edits.InsertEdit;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
@@ -23,13 +29,12 @@ import org.eclipse.xtext.validation.Issue;
 
 import com._1c.g5.v8.bm.core.IBmTransaction;
 import com._1c.g5.v8.bm.integration.AbstractBmTask;
-import com._1c.g5.v8.bm.integration.IBmModel;
 import com._1c.g5.v8.dt.bsl.model.Method;
 import com._1c.g5.v8.dt.bsl.model.Module;
 import com._1c.g5.v8.dt.bsl.model.RegionPreprocessor;
 import com._1c.g5.v8.dt.bsl.model.util.BslUtil;
 import com._1c.g5.v8.dt.bsl.ui.quickfix.AbstractExternalQuickfixProvider;
-import com._1c.g5.v8.dt.core.platform.IBmModelManager;
+import com._1c.g5.v8.dt.core.operations.model.IEditingContext;
 import com._1c.g5.v8.dt.core.platform.IV8Project;
 import com._1c.g5.v8.dt.core.platform.IV8ProjectManager;
 import com._1c.g5.v8.dt.form.model.EventHandler;
@@ -41,6 +46,8 @@ import com._1c.g5.v8.dt.mcore.Event;
 import com._1c.g5.v8.dt.metadata.mdclass.Configuration;
 import com._1c.g5.v8.dt.metadata.mdclass.ObjectBelonging;
 import com._1c.g5.v8.dt.metadata.mdclass.ScriptVariant;
+import com._1c.g5.v8.dt.ui.editor.IDtEditor;
+import com._1c.g5.v8.dt.ui.editor.input.DtEditorInput;
 import com.google.common.collect.Iterables;
 import com.google.common.io.CharSource;
 import com.google.common.io.CharStreams;
@@ -124,8 +131,6 @@ public class ObjectFormModuleQuickFix
     }
 
     @Inject
-    private IBmModelManager bmModelManager;
-    @Inject
     private IV8ProjectManager projectManager;
 
     private void addEventHandler(Form moduleForm, String eventName, String handlerName, IBmTransaction transaction)
@@ -162,6 +167,29 @@ public class ObjectFormModuleQuickFix
             }));
     }
 
+    private IDtEditor<?> getDtEditorByModel(Form form, IWorkbenchPage activePage)
+    {
+        for (IEditorReference reference : activePage.getEditorReferences())
+        {
+            try
+            {
+                if (reference.getEditorInput() instanceof DtEditorInput<?>)
+                {
+                    DtEditorInput<?> input = (DtEditorInput<?>)reference.getEditorInput();
+                    if (form.getMdForm().equals(input.getModel()) && reference.getEditor(false) instanceof IDtEditor<?>)
+                    {
+                        return (IDtEditor<?>)reference.getEditor(false);
+                    }
+                }
+            }
+            catch (PartInitException e)
+            {
+                AttacheableCommandsUiPlugin.log(AttacheableCommandsUiPlugin.createErrorStatus(e.getMessage(), e));
+            }
+        }
+        return null;
+    }
+
     @Fix(ObjectFormModuleValidator.ERROR_METHOD_ON_CREATE_AT_SERVER_NOT_EXISTS)
     public void onCreateAtServerAddCommand(final Issue issue, final IssueResolutionAcceptor acceptor)
     {
@@ -170,20 +198,36 @@ public class ObjectFormModuleQuickFix
             new ExternalQuickfixModification<>(issue, Module.class, module -> {
 
                 Form moduleForm = (Form)module.getOwner();
-                IBmModel model = bmModelManager.getModel(moduleForm);
-                if (model == null)
-                    return null;
 
-                model.createLocalContext(Messages.Error_ObjectFormModule_MethodOnCreateAtServerNotExists_Title).execute(
-                    new AbstractBmTask<IStatus>(Messages.Error_ObjectFormModule_MethodOnCreateAtServerNotExists_Title)
-                    {
-                        @Override
-                        public IStatus execute(IBmTransaction transaction, IProgressMonitor monitor)
+                if (PlatformUI.getWorkbench() != null && moduleForm.getMdForm() != null)
+                {
+                    PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+                        IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+                        if (activeWorkbenchWindow != null && activeWorkbenchWindow.getActivePage() != null)
                         {
-                            addEventHandler(moduleForm, "OnCreateAtServer", "ПриСозданииНаСервере", transaction); //$NON-NLS-1$ //$NON-NLS-2$
-                            return Status.OK_STATUS;
+                            IDtEditor<?> dtEditor =
+                                getDtEditorByModel(moduleForm, activeWorkbenchWindow.getActivePage());
+                            if (dtEditor != null)
+                            {
+                                IEditingContext editingContext = dtEditor.getApiEditingContext();
+                                if (!editingContext.isDisposed())
+                                {
+                                    editingContext.execute(new AbstractBmTask<IStatus>(
+                                        Messages.Error_ObjectFormModule_MethodOnCreateAtServerNotExists_Title)
+                                    {
+                                        @Override
+                                        public IStatus execute(IBmTransaction transaction, IProgressMonitor monitor)
+                                        {
+                                            addEventHandler(moduleForm, "OnCreateAtServer", "ПриСозданииНаСервере", //$NON-NLS-1$//$NON-NLS-2$
+                                                transaction);
+                                            return Status.OK_STATUS;
+                                        }
+                                    }, new NullProgressMonitor());
+                                }
+                            }
                         }
                     });
+                }
 
                 IV8Project v8Project = projectManager.getProject(module);
                 Configuration configuration = MdUtils.getConfigurationForProject(v8Project);

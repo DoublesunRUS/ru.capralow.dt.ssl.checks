@@ -7,7 +7,10 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.xtext.EcoreUtil2;
+
 import com._1c.g5.v8.dt.bsl.model.Method;
+import com._1c.g5.v8.dt.bsl.model.Module;
 import com._1c.g5.v8.dt.core.platform.IV8Project;
 import com._1c.g5.v8.dt.mcore.TypeItem;
 import com._1c.g5.v8.dt.metadata.mdclass.CommonModule;
@@ -51,9 +54,10 @@ public final class AttacheableObjects
         if (mdObject == null)
             return;
 
-        CommonModule commonModule = (CommonModule)mdObject;
+        Module module = ((CommonModule)mdObject).getModule();
+        EcoreUtil2.resolveLazyCrossReferences(module.eResource(), null);
 
-        Method method = MdUtils.getMethod(commonModule.getModule(), "ПриОпределенииОбъектовСКомандамиЗаполнения"); //$NON-NLS-1$
+        Method method = MdUtils.getMethod(module, "ПриОпределенииОбъектовСКомандамиЗаполнения"); //$NON-NLS-1$
         if (method == null)
             return;
 
@@ -68,9 +72,10 @@ public final class AttacheableObjects
         if (mdObject == null)
             return;
 
-        CommonModule commonModule = (CommonModule)mdObject;
+        Module module = ((CommonModule)mdObject).getModule();
+        EcoreUtil2.resolveLazyCrossReferences(module.eResource(), null);
 
-        Method method = MdUtils.getMethod(commonModule.getModule(), "ПриОпределенииОбъектовСКомандамиПечати"); //$NON-NLS-1$
+        Method method = MdUtils.getMethod(module, "ПриОпределенииОбъектовСКомандамиПечати"); //$NON-NLS-1$
         if (method == null)
             return;
 
@@ -85,9 +90,10 @@ public final class AttacheableObjects
         if (mdObject == null)
             return;
 
-        CommonModule commonModule = (CommonModule)mdObject;
+        Module module = ((CommonModule)mdObject).getModule();
+        EcoreUtil2.resolveLazyCrossReferences(module.eResource(), null);
 
-        Method method = MdUtils.getMethod(commonModule.getModule(), "ОпределитьОбъектыСКомандамиОтчетов"); //$NON-NLS-1$
+        Method method = MdUtils.getMethod(module, "ОпределитьОбъектыСКомандамиОтчетов"); //$NON-NLS-1$
         if (method == null)
             return;
 

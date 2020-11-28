@@ -29,7 +29,7 @@ public class ObjectFormModuleValidatorExcessiveTests
     {
         TestingWorkspaceUtils.checkIssue("v2_4_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
-            ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_AT_SERVER_EXCESSIVE_METHOD, Severity.WARNING, 39);
+            ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_AT_SERVER_EXCESSIVE_METHOD, Severity.WARNING, 49);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class ObjectFormModuleValidatorExcessiveTests
     {
         TestingWorkspaceUtils.checkIssue("v2_4_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
-            ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_EXCESSIVE_METHOD, Severity.WARNING, 31);
+            ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_EXCESSIVE_METHOD, Severity.WARNING, 41);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class ObjectFormModuleValidatorExcessiveTests
     {
         TestingWorkspaceUtils.checkIssue("v2_4_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
-            ObjectFormModuleValidator.ERROR_METHOD_ON_CREATE_AT_SERVER_EXCESSIVE_CALL, Severity.WARNING, 5);
+            ObjectFormModuleValidator.ERROR_METHOD_ON_CREATE_AT_SERVER_EXCESSIVE_CALL, Severity.WARNING, 15);
     }
 
     @Test
@@ -101,7 +101,7 @@ public class ObjectFormModuleValidatorExcessiveTests
     {
         TestingWorkspaceUtils.checkIssue("v2_4_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
-            ObjectFormModuleValidator.ERROR_METHOD_ON_OPEN_EXCESSIVE_CALL, Severity.WARNING, 23);
+            ObjectFormModuleValidator.ERROR_METHOD_ON_OPEN_EXCESSIVE_CALL, Severity.WARNING, 33);
     }
 
     @Test
@@ -125,7 +125,7 @@ public class ObjectFormModuleValidatorExcessiveTests
     {
         TestingWorkspaceUtils.checkIssue("v2_4_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
-            ObjectFormModuleValidator.ERROR_METHOD_ON_READ_AT_SERVER_EXCESSIVE_CALL, Severity.WARNING, 14);
+            ObjectFormModuleValidator.ERROR_METHOD_ON_READ_AT_SERVER_EXCESSIVE_CALL, Severity.WARNING, 24);
     }
 
     @Test
@@ -149,7 +149,7 @@ public class ObjectFormModuleValidatorExcessiveTests
     {
         TestingWorkspaceUtils.checkIssue("v2_4_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
-            ObjectFormModuleValidator.ERROR_METHOD_REREAD_COMMANDS_EXCESSIVE_METHOD, Severity.WARNING, 47);
+            ObjectFormModuleValidator.ERROR_METHOD_REREAD_COMMANDS_EXCESSIVE_METHOD, Severity.WARNING, 57);
     }
 
     @Test

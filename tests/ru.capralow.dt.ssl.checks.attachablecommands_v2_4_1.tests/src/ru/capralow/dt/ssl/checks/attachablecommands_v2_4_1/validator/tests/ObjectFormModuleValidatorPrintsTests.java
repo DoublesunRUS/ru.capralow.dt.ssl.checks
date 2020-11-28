@@ -161,7 +161,7 @@ public class ObjectFormModuleValidatorPrintsTests
     public void testMissingCallsExecuteCommandAtServerMissingCall() throws Exception
     {
         TestingWorkspaceUtils.checkIssue("v2_4_1", "src/Documents/ПечатьБезВызовов/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$//$NON-NLS-2$
-            ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_AT_SERVER_MISSING_CALL, Severity.WARNING, 28);
+            ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_AT_SERVER_MISSING_CALL, Severity.WARNING, 38);
     }
 
     @Test
@@ -175,7 +175,7 @@ public class ObjectFormModuleValidatorPrintsTests
     public void testMissingCallsExecuteCommandMissingCall() throws Exception
     {
         TestingWorkspaceUtils.checkIssue("v2_4_1", "src/Documents/ПечатьБезВызовов/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$//$NON-NLS-2$
-            ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_MISSING_CALL, Severity.WARNING, 22);
+            ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_MISSING_CALL, Severity.WARNING, 32);
     }
 
     @Test
@@ -203,7 +203,7 @@ public class ObjectFormModuleValidatorPrintsTests
     public void testMissingCallsOnOpenMissingCall() throws Exception
     {
         TestingWorkspaceUtils.checkIssue("v2_4_1", "src/Documents/ПечатьБезВызовов/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$//$NON-NLS-2$
-            ObjectFormModuleValidator.ERROR_METHOD_ON_OPEN_MISSING_CALL, Severity.WARNING, 15);
+            ObjectFormModuleValidator.ERROR_METHOD_ON_OPEN_MISSING_CALL, Severity.WARNING, 25);
     }
 
     @Test
@@ -217,7 +217,7 @@ public class ObjectFormModuleValidatorPrintsTests
     public void testMissingCallsOnReadAtServerMissingCall() throws Exception
     {
         TestingWorkspaceUtils.checkIssue("v2_4_1", "src/Documents/ПечатьБезВызовов/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$//$NON-NLS-2$
-            ObjectFormModuleValidator.ERROR_METHOD_ON_READ_AT_SERVER_MISSING_CALL, Severity.WARNING, 9);
+            ObjectFormModuleValidator.ERROR_METHOD_ON_READ_AT_SERVER_MISSING_CALL, Severity.WARNING, 19);
     }
 
     @Test
@@ -231,7 +231,7 @@ public class ObjectFormModuleValidatorPrintsTests
     public void testMissingCallsRereadCommandsMissingCall() throws Exception
     {
         TestingWorkspaceUtils.checkIssue("v2_4_1", "src/Documents/ПечатьБезВызовов/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$//$NON-NLS-2$
-            ObjectFormModuleValidator.ERROR_METHOD_REREAD_COMMANDS_MISSING_CALL, Severity.WARNING, 34);
+            ObjectFormModuleValidator.ERROR_METHOD_REREAD_COMMANDS_MISSING_CALL, Severity.WARNING, 44);
     }
 
     @Test

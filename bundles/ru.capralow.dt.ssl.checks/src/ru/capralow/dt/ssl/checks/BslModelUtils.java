@@ -32,6 +32,7 @@ import com._1c.g5.v8.dt.bsl.model.FormalParam;
 import com._1c.g5.v8.dt.bsl.model.IfStatement;
 import com._1c.g5.v8.dt.bsl.model.Invocation;
 import com._1c.g5.v8.dt.bsl.model.Method;
+import com._1c.g5.v8.dt.bsl.model.Module;
 import com._1c.g5.v8.dt.bsl.model.SimpleStatement;
 import com._1c.g5.v8.dt.bsl.model.SourceObjectLinkProvider;
 import com._1c.g5.v8.dt.bsl.model.Statement;
@@ -113,7 +114,10 @@ public final class BslModelUtils
             if (commonModule == null)
                 return;
 
-            method = MdUtils.getMethod(commonModule.getModule(), dynamicMethodAccess.getName());
+            Module module = commonModule.getModule();
+            EcoreUtil2.resolveLazyCrossReferences(module.eResource(), null);
+
+            method = MdUtils.getMethod(module, dynamicMethodAccess.getName());
             if (method == null)
                 return;
 

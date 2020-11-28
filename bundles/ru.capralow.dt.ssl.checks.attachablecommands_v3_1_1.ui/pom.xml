@@ -11,6 +11,6 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>ru.capralow.dt.ssl.checks.attachablecommands_v3_1_1</artifactId>
+	<artifactId>ru.capralow.dt.ssl.checks.attachablecommands_v3_1_1.ui</artifactId>
 	<packaging>eclipse-plugin</packaging>
 </project>

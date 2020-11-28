@@ -19,8 +19,8 @@
 	<modules>
 		<module>ru.capralow.dt.ssl.checks</module>
 		<module>ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1</module>
-		<module>ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1.ui</module>
 		<module>ru.capralow.dt.ssl.checks.attachablecommands_v3_1_1</module>
+		<module>ru.capralow.dt.ssl.checks.attachablecommands_v3_1_1.ui</module>
 	</modules>
 
 	<build>

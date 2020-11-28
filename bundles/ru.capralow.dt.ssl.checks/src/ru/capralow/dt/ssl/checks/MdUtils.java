@@ -23,7 +23,7 @@ import com._1c.g5.v8.dt.metadata.mdclass.MdObject;
 
 import ru.capralow.dt.ssl.checks.internal.SslPlugin;
 
-public class MdUtils
+public final class MdUtils
 {
 
     public static final String MD_OBJECT = "{0}.{1}"; //$NON-NLS-1$

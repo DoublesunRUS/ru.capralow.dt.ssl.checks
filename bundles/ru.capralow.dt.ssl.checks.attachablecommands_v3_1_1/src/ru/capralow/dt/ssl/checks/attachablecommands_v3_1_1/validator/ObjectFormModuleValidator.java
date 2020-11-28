@@ -387,7 +387,7 @@ public class ObjectFormModuleValidator
         {
             String methodName = method.getName();
 
-            if (methodName.equalsIgnoreCase("ПриСозданииНаСервере") || methodName.equalsIgnoreCase("OnCreateAtServer")) //$NON-NLS-1$//$NON-NLS-2$
+            if (methodName.equalsIgnoreCase("ПриСозданииНаСервере") || methodName.equalsIgnoreCase("OnCreateAtServer")) //$NON-NLS-1$ //$NON-NLS-2$
                 methodOnCreateAtServer = method;
 
             else if (methodName.equalsIgnoreCase("ПриЧтенииНаСервере") || methodName.equalsIgnoreCase("OnReadAtServer")) //$NON-NLS-1$ //$NON-NLS-2$

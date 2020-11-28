@@ -16,7 +16,7 @@
 	</prerequisites>
 
 	<properties>
-		<name>Vanessa Automation для 1Unit</name>
+		<name>SSL Checks EDT Plugin</name>
 
 		<tycho.version>1.7.0</tycho.version>
 		<tycho.extras.version>1.7.0</tycho.extras.version>

@@ -47,7 +47,7 @@ import com._1c.g5.v8.dt.metadata.mdclass.BasicDbObject;
 import com._1c.g5.v8.dt.metadata.mdclass.CommonModule;
 import com._1c.g5.v8.dt.metadata.mdclass.Subsystem;
 
-public class BslModelUtils
+public final class BslModelUtils
 {
 
     private static DynamicFeatureAccessComputer dynamicFeatureAccessComputer =

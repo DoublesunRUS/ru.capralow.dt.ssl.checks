@@ -9,7 +9,7 @@ public class Messages
     extends NLS
 {
 
-    private static final String BUNDLE_NAME = "ru.capralow.dt.ssl.checks.messages";//$NON-NLS-1$
+    private static final String BUNDLE_NAME = "ru.capralow.dt.ssl.checks.messages"; //$NON-NLS-1$
 
     public static String Internal_class;
 

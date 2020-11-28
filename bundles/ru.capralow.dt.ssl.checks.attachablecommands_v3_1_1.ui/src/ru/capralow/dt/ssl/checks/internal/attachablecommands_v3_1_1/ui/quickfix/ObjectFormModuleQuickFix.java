@@ -218,7 +218,7 @@ public class ObjectFormModuleQuickFix
                                         @Override
                                         public IStatus execute(IBmTransaction transaction, IProgressMonitor monitor)
                                         {
-                                            addEventHandler(moduleForm, "OnCreateAtServer", "ПриСозданииНаСервере", //$NON-NLS-1$//$NON-NLS-2$
+                                            addEventHandler(moduleForm, "OnCreateAtServer", "ПриСозданииНаСервере", //$NON-NLS-1$ //$NON-NLS-2$
                                                 transaction);
                                             return Status.OK_STATUS;
                                         }

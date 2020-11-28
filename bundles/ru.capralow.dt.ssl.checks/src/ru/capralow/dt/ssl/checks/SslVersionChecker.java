@@ -14,21 +14,21 @@ import com._1c.g5.v8.dt.core.platform.IV8Project;
 import com._1c.g5.v8.dt.metadata.mdclass.CommonModule;
 import com._1c.g5.v8.dt.metadata.mdclass.MdObject;
 
-public class SslVersionChecker
+public final class SslVersionChecker
 {
 
     public static boolean checkSslVersion(IV8Project v8Project, String startVersion)
     {
-        String sslVersion = getSSLVersion(v8Project);
+        String sslVersion = getSslVersion(v8Project);
 
         return compareVersions(startVersion, sslVersion) == 0;
     }
 
     public static boolean checkSslVersion(IV8Project v8Project, String startVersion, String endVersion)
     {
-        String sslVersion = getSSLVersion(v8Project);
+        String sslVersion = getSslVersion(v8Project);
 
-        return (compareVersions(startVersion, sslVersion) != 1 && compareVersions(endVersion, sslVersion) != -1);
+        return compareVersions(startVersion, sslVersion) != 1 && compareVersions(endVersion, sslVersion) != -1;
     }
 
     private static Integer compareVersions(String version1, String version2)
@@ -52,12 +52,12 @@ public class SslVersionChecker
         return 0;
     }
 
-    private static String getSSLVersion(IV8Project v8Project)
+    private static String getSslVersion(IV8Project v8Project)
     {
         String version = ""; //$NON-NLS-1$
 
         MdObject mdObject = MdUtils.getMdObject(
-            MessageFormat.format(MdUtils.MD_OBJECT, "ОбщийМодуль", "ОбновлениеИнформационнойБазыБСП"), //$NON-NLS-1$//$NON-NLS-2$
+            MessageFormat.format(MdUtils.MD_OBJECT, "ОбщийМодуль", "ОбновлениеИнформационнойБазыБСП"), //$NON-NLS-1$ //$NON-NLS-2$
             v8Project);
         if (mdObject == null)
             return version;

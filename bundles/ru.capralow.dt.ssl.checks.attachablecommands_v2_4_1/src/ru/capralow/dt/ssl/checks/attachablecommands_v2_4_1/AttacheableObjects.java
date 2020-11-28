@@ -17,7 +17,7 @@ import com._1c.g5.v8.dt.metadata.mdclass.MdObject;
 import ru.capralow.dt.ssl.checks.BslModelUtils;
 import ru.capralow.dt.ssl.checks.MdUtils;
 
-public class AttacheableObjects
+public final class AttacheableObjects
 {
 
     public static void getAdditionalObjects(List<String> objectsList, IV8Project v8Project)
@@ -46,7 +46,7 @@ public class AttacheableObjects
     public static void getFillingObjects(List<String> objectsList, IV8Project v8Project)
     {
         MdObject mdObject = MdUtils.getMdObject(
-            MessageFormat.format(MdUtils.MD_OBJECT, "ОбщийМодуль", "ЗаполнениеОбъектовПереопределяемый"), //$NON-NLS-1$//$NON-NLS-2$
+            MessageFormat.format(MdUtils.MD_OBJECT, "ОбщийМодуль", "ЗаполнениеОбъектовПереопределяемый"), //$NON-NLS-1$ //$NON-NLS-2$
             v8Project);
         if (mdObject == null)
             return;
@@ -63,7 +63,7 @@ public class AttacheableObjects
     public static void getPrintObjects(List<String> objectsList, IV8Project v8Project)
     {
         MdObject mdObject = MdUtils.getMdObject(
-            MessageFormat.format(MdUtils.MD_OBJECT, "ОбщийМодуль", "УправлениеПечатьюПереопределяемый"), //$NON-NLS-1$//$NON-NLS-2$
+            MessageFormat.format(MdUtils.MD_OBJECT, "ОбщийМодуль", "УправлениеПечатьюПереопределяемый"), //$NON-NLS-1$ //$NON-NLS-2$
             v8Project);
         if (mdObject == null)
             return;
@@ -80,7 +80,7 @@ public class AttacheableObjects
     public static void getReportObjects(List<String> objectsList, IV8Project v8Project)
     {
         MdObject mdObject = MdUtils.getMdObject(
-            MessageFormat.format(MdUtils.MD_OBJECT, "ОбщийМодуль", "ВариантыОтчетовПереопределяемый"), //$NON-NLS-1$//$NON-NLS-2$
+            MessageFormat.format(MdUtils.MD_OBJECT, "ОбщийМодуль", "ВариантыОтчетовПереопределяемый"), //$NON-NLS-1$ //$NON-NLS-2$
             v8Project);
         if (mdObject == null)
             return;

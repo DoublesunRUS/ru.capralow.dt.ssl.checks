@@ -18,7 +18,7 @@
 
 	<module name="LineLength">
 		<property name="max" value="120" />
-		<property name="ignorePattern" value="^ *\* *[^ ]+$" />
+		<property name="ignorePattern" value="^ *\* *[^ ]+$|(\s\/\/\$NON-NLS-\d\$)+$" />
 	</module>
 
 	<module name="TreeWalker">

@@ -11,7 +11,7 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	
-	<artifactId>ru.capralow.dt.ssl.checks.feature</artifactId>
+	<artifactId>ru.capralow.dt.ssl.checks.attachablecommands.feature</artifactId>
 	<packaging>eclipse-feature</packaging>
 	
 	<build>

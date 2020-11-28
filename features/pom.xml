@@ -21,7 +21,7 @@
 	</properties>
 
 	<modules>
-		<module>ru.capralow.dt.ssl.checks.feature</module>
+		<module>ru.capralow.dt.ssl.checks.attachablecommands.feature</module>
 	</modules>
 
 </project>

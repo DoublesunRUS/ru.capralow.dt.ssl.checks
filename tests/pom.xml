@@ -18,7 +18,6 @@
 	<modules>
 		<module>ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1.tests</module>
 		<module>ru.capralow.dt.ssl.checks.attachablecommands_v3_1_1.tests</module>
-		<module>ru.capralow.dt.ssl.checks.attachablecommands_v3_1_1.ui.tests</module>
 	</modules>
 
 	<profiles>
@@ -55,8 +54,7 @@
 	</profiles>
 
 	<properties>
-		<tycho-surefire-plugin.vmargs>-Xms80m -Xmx2g
-			-Dosgi.module.lock.timeout=24 --add-modules=ALL-SYSTEM</tycho-surefire-plugin.vmargs>
+		<tycho-surefire-plugin.vmargs>-Xms80m -Xmx4g -Dosgi.module.lock.timeout=240 --add-modules=ALL-SYSTEM</tycho-surefire-plugin.vmargs>
 		<debug.vmargs></debug.vmargs>
 	</properties>
 
@@ -95,8 +93,7 @@
 					<configuration>
 						<useUIHarness>true</useUIHarness>
 						<useUIThread>true</useUIThread>
-						<argLine>${ui.test.vmargs} ${tycho-surefire-plugin.vmargs}
-							${debug.vmargs}</argLine>
+						<argLine>${ui.test.vmargs} ${tycho-surefire-plugin.vmargs} ${debug.vmargs}</argLine>
 						<work>${project.build.directory}/work</work>
 						<testRuntime>p2Installed</testRuntime>
 					</configuration>

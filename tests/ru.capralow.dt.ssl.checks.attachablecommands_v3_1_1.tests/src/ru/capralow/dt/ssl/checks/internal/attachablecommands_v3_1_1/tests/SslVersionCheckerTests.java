@@ -76,44 +76,44 @@ public class SslVersionCheckerTests
     }
 
     @Test
-    public void testVersion_2_4_1__3_0_3() throws Exception
+    public void testVersion_2_4_1__3_0_3_not_equals() throws Exception
     {
         testFalseVersion("2.4.1", "3.0.3"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     @Test
-    public void testVersion_2_4_6() throws Exception
+    public void testVersion_2_4_6_not_equals() throws Exception
     {
         testFalseVersion("2.4.6"); //$NON-NLS-1$
     }
 
     @Test
-    public void testVersion_3_1() throws Exception
-    {
-        testTrueVersion("3.1"); //$NON-NLS-1$
-    }
-
-    @Test
-    public void testVersion_3_1_1() throws Exception
-    {
-        testTrueVersion("3.1.1"); //$NON-NLS-1$
-    }
-
-    @Test
-    public void testVersion_3_1_1__3_1_1() throws Exception
+    public void testVersion_3_1_1__3_1_1_equals() throws Exception
     {
         testTrueVersion("3.1.1", "3.1.1"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     @Test
-    public void testVersion_3_1_2() throws Exception
+    public void testVersion_3_1_1_equals() throws Exception
+    {
+        testTrueVersion("3.1.1"); //$NON-NLS-1$
+    }
+
+    @Test
+    public void testVersion_3_1_2__3_2_not_equals() throws Exception
+    {
+        testFalseVersion("3.1.2", "3.2"); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+
+    @Test
+    public void testVersion_3_1_2_not_equals() throws Exception
     {
         testFalseVersion("3.1.2"); //$NON-NLS-1$
     }
 
     @Test
-    public void testVersion_3_1_2__3_2() throws Exception
+    public void testVersion_3_1_equals() throws Exception
     {
-        testFalseVersion("3.1.2", "3.2"); //$NON-NLS-1$ //$NON-NLS-2$
+        testTrueVersion("3.1"); //$NON-NLS-1$
     }
 }

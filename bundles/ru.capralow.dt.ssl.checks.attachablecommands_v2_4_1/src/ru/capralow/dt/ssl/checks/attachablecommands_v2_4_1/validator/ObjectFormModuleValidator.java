@@ -18,6 +18,7 @@ import com._1c.g5.v8.bm.core.IBmCrossReference;
 import com._1c.g5.v8.bm.core.IBmObject;
 import com._1c.g5.v8.dt.bsl.model.DynamicFeatureAccess;
 import com._1c.g5.v8.dt.bsl.model.Expression;
+import com._1c.g5.v8.dt.bsl.model.FeatureAccess;
 import com._1c.g5.v8.dt.bsl.model.Invocation;
 import com._1c.g5.v8.dt.bsl.model.Method;
 import com._1c.g5.v8.dt.bsl.model.Module;
@@ -113,10 +114,13 @@ public class ObjectFormModuleValidator
             if (!(leftStatement instanceof Invocation))
                 continue;
 
-            DynamicFeatureAccess methodAccess = (DynamicFeatureAccess)((Invocation)leftStatement).getMethodAccess();
+            FeatureAccess methodAccess = ((Invocation)leftStatement).getMethodAccess();
+            if (!(methodAccess instanceof DynamicFeatureAccess))
+                continue;
 
             String statementMethodName = MessageFormat.format("{0}.{1}", //$NON-NLS-1$
-                ((StaticFeatureAccess)methodAccess.getSource()).getName(), methodAccess.getName());
+                ((StaticFeatureAccess)((DynamicFeatureAccess)methodAccess).getSource()).getName(),
+                methodAccess.getName());
 
             if (methodName.equalsIgnoreCase(statementMethodName))
                 return statement;

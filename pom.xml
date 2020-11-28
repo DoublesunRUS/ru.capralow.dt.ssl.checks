@@ -17,7 +17,7 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>Проверка внедрения БСП</name>
+	<name>SSL Checks EDT Plugin</name>
 
 	<modules>
 		<module>targets</module>

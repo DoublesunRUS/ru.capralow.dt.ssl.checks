@@ -25,7 +25,6 @@ import com._1c.g5.v8.dt.bsl.model.Module;
 import com._1c.g5.v8.dt.bsl.model.ModuleType;
 import com._1c.g5.v8.dt.bsl.model.SimpleStatement;
 import com._1c.g5.v8.dt.bsl.model.Statement;
-import com._1c.g5.v8.dt.bsl.model.StaticFeatureAccess;
 import com._1c.g5.v8.dt.bsl.validation.CustomValidationMessageAcceptor;
 import com._1c.g5.v8.dt.bsl.validation.IExternalBslValidator;
 import com._1c.g5.v8.dt.core.platform.IV8Project;
@@ -119,8 +118,7 @@ public class ObjectFormModuleValidator
                 continue;
 
             String statementMethodName = MessageFormat.format("{0}.{1}", //$NON-NLS-1$
-                ((StaticFeatureAccess)((DynamicFeatureAccess)methodAccess).getSource()).getName(),
-                methodAccess.getName());
+                ((FeatureAccess)((DynamicFeatureAccess)methodAccess).getSource()).getName(), methodAccess.getName());
 
             if (methodName.equalsIgnoreCase(statementMethodName))
                 return statement;
@@ -154,6 +152,9 @@ public class ObjectFormModuleValidator
         if (moduleReference == null)
             return ""; //$NON-NLS-1$
         IBmObject moduleObject = moduleReference.getObject().bmGetTopObject();
+
+        if (!(moduleObject instanceof BasicDbObject))
+            return ""; //$NON-NLS-1$
 
         return MdTypeUtil.getRefType((BasicDbObject)moduleObject).getName();
     }
@@ -381,6 +382,9 @@ public class ObjectFormModuleValidator
 
         for (Method method : module.allMethods())
         {
+            if (monitor.isCanceled())
+                return;
+
             String methodName = method.getName();
 
             if (methodName.equalsIgnoreCase("ПриСозданииНаСервере") || methodName.equalsIgnoreCase("OnCreateAtServer")) //$NON-NLS-1$ //$NON-NLS-2$
@@ -402,6 +406,9 @@ public class ObjectFormModuleValidator
                 methodRereadCommands = method;
 
         }
+
+        if (monitor.isCanceled())
+            return;
 
         validateOnCreateAtServer(objectConnected, methodOnCreateAtServer, module, messageAcceptor);
         validateOnReadAtServer(objectConnected, methodOnReadAtServer, module, messageAcceptor);

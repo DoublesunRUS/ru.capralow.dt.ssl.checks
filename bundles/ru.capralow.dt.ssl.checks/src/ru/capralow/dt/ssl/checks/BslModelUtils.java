@@ -195,10 +195,13 @@ public final class BslModelUtils
                         EcoreUtil2.getContainerOfType(firstParam, Environmental.class).environments());
                     if (featureEntries.isEmpty())
                         return;
+
                     FeatureEntry featureEntry = featureEntries.get(0);
                     DerivedProperty deriveredProperty = (DerivedProperty)featureEntry.getFeature();
                     BasicDbObject objectOwner =
                         EcoreUtil2.getContainerOfType(deriveredProperty.getSource(), BasicDbObject.class);
+                    if (objectOwner == null)
+                        return;
 
                     objectsList.add(MdTypeUtil.getRefType(objectOwner).getName());
                 }

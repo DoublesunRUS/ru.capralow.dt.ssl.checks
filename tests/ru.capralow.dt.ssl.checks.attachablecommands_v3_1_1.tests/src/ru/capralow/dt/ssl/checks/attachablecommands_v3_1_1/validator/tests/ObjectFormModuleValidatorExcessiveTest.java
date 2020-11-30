@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2020, Alexander Kapralov
  */
-package ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1.validator.tests;
+package ru.capralow.dt.ssl.checks.attachablecommands_v3_1_1.validator.tests;
 
 import org.eclipse.xtext.diagnostics.Severity;
 import org.junit.BeforeClass;
@@ -10,9 +10,9 @@ import org.junit.Test;
 
 import com._1c.g5.v8.dt.testing.TestingWorkspace;
 
-import ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1.validator.ObjectFormModuleValidator;
+import ru.capralow.dt.ssl.checks.attachablecommands_v3_1_1.validator.ObjectFormModuleValidator;
 
-public class ObjectFormModuleValidatorExcessiveTests
+public class ObjectFormModuleValidatorExcessiveTest
 {
 
     @ClassRule
@@ -21,29 +21,37 @@ public class ObjectFormModuleValidatorExcessiveTests
     @BeforeClass
     public static void setUp() throws Exception
     {
-        testingWorkspace.setUpProject("v2_4_1", ObjectFormModuleValidatorExcessiveTests.class); //$NON-NLS-1$
+        testingWorkspace.setUpProject("v3_1_1", ObjectFormModuleValidatorExcessiveTest.class); //$NON-NLS-1$
     }
 
     @Test
     public void testExecuteCommandAtServerExcessiveMethod() throws Exception
     {
-        TestingWorkspaceUtils.checkIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
-            ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_AT_SERVER_EXCESSIVE_METHOD, Severity.WARNING, 49);
+            ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_AT_SERVER_EXCESSIVE_METHOD, Severity.WARNING, 39);
     }
 
     @Test
     public void testExecuteCommandAtServerNoMissingCall() throws Exception
     {
-        TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkNoIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
             ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_AT_SERVER_MISSING_CALL);
     }
 
     @Test
+    public void testExecuteCommandAtServerNoMissingExport() throws Exception
+    {
+        TestingWorkspaceUtils.checkNoIssue("v3_1_1", //$NON-NLS-1$
+            "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
+            ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_AT_SERVER_MISSING_EXPORT);
+    }
+
+    @Test
     public void testExecuteCommandAtServerNoNotExists() throws Exception
     {
-        TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkNoIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
             ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_AT_SERVER_NOT_EXISTS);
     }
@@ -51,15 +59,15 @@ public class ObjectFormModuleValidatorExcessiveTests
     @Test
     public void testExecuteCommandExcessiveMethod() throws Exception
     {
-        TestingWorkspaceUtils.checkIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
-            ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_EXCESSIVE_METHOD, Severity.WARNING, 41);
+            ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_EXCESSIVE_METHOD, Severity.WARNING, 31);
     }
 
     @Test
     public void testExecuteCommandNoMissingCall() throws Exception
     {
-        TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkNoIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
             ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_MISSING_CALL);
     }
@@ -67,7 +75,7 @@ public class ObjectFormModuleValidatorExcessiveTests
     @Test
     public void testExecuteCommandNoNotExists() throws Exception
     {
-        TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkNoIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
             ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_NOT_EXISTS);
     }
@@ -75,15 +83,15 @@ public class ObjectFormModuleValidatorExcessiveTests
     @Test
     public void testOnCreateAtServerExcessiveCall() throws Exception
     {
-        TestingWorkspaceUtils.checkIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
-            ObjectFormModuleValidator.ERROR_METHOD_ON_CREATE_AT_SERVER_EXCESSIVE_CALL, Severity.WARNING, 15);
+            ObjectFormModuleValidator.ERROR_METHOD_ON_CREATE_AT_SERVER_EXCESSIVE_CALL, Severity.WARNING, 5);
     }
 
     @Test
     public void testOnCreateAtServerNoMissingCall() throws Exception
     {
-        TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkNoIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
             ObjectFormModuleValidator.ERROR_METHOD_ON_CREATE_AT_SERVER_MISSING_CALL);
     }
@@ -91,7 +99,7 @@ public class ObjectFormModuleValidatorExcessiveTests
     @Test
     public void testOnCreateAtServerNoNotExists() throws Exception
     {
-        TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkNoIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
             ObjectFormModuleValidator.ERROR_METHOD_ON_CREATE_AT_SERVER_NOT_EXISTS);
     }
@@ -99,15 +107,15 @@ public class ObjectFormModuleValidatorExcessiveTests
     @Test
     public void testOnOpenExcessiveCall() throws Exception
     {
-        TestingWorkspaceUtils.checkIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
-            ObjectFormModuleValidator.ERROR_METHOD_ON_OPEN_EXCESSIVE_CALL, Severity.WARNING, 33);
+            ObjectFormModuleValidator.ERROR_METHOD_ON_OPEN_EXCESSIVE_CALL, Severity.WARNING, 23);
     }
 
     @Test
     public void testOnOpenNoMissingCall() throws Exception
     {
-        TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkNoIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
             ObjectFormModuleValidator.ERROR_METHOD_ON_OPEN_MISSING_CALL);
     }
@@ -115,7 +123,7 @@ public class ObjectFormModuleValidatorExcessiveTests
     @Test
     public void testOnOpenNoNotExists() throws Exception
     {
-        TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkNoIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
             ObjectFormModuleValidator.ERROR_METHOD_ON_OPEN_NOT_EXISTS);
     }
@@ -123,15 +131,15 @@ public class ObjectFormModuleValidatorExcessiveTests
     @Test
     public void testOnReadAtServerExcessiveCall() throws Exception
     {
-        TestingWorkspaceUtils.checkIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
-            ObjectFormModuleValidator.ERROR_METHOD_ON_READ_AT_SERVER_EXCESSIVE_CALL, Severity.WARNING, 24);
+            ObjectFormModuleValidator.ERROR_METHOD_ON_READ_AT_SERVER_EXCESSIVE_CALL, Severity.WARNING, 14);
     }
 
     @Test
     public void testOnReadAtServerNoMissingCall() throws Exception
     {
-        TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkNoIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
             ObjectFormModuleValidator.ERROR_METHOD_ON_READ_AT_SERVER_MISSING_CALL);
     }
@@ -139,7 +147,7 @@ public class ObjectFormModuleValidatorExcessiveTests
     @Test
     public void testOnReadAtServerNoNotExists() throws Exception
     {
-        TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkNoIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
             ObjectFormModuleValidator.ERROR_METHOD_ON_READ_AT_SERVER_NOT_EXISTS);
     }
@@ -147,15 +155,15 @@ public class ObjectFormModuleValidatorExcessiveTests
     @Test
     public void testRereadCommandsExcessiveMethod() throws Exception
     {
-        TestingWorkspaceUtils.checkIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
-            ObjectFormModuleValidator.ERROR_METHOD_REREAD_COMMANDS_EXCESSIVE_METHOD, Severity.WARNING, 57);
+            ObjectFormModuleValidator.ERROR_METHOD_REREAD_COMMANDS_EXCESSIVE_METHOD, Severity.WARNING, 47);
     }
 
     @Test
     public void testRereadCommandsNoMissingCall() throws Exception
     {
-        TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkNoIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
             ObjectFormModuleValidator.ERROR_METHOD_REREAD_COMMANDS_MISSING_CALL);
     }
@@ -163,7 +171,7 @@ public class ObjectFormModuleValidatorExcessiveTests
     @Test
     public void testRereadCommandsNoNotExists() throws Exception
     {
-        TestingWorkspaceUtils.checkNoIssue("v2_4_1", //$NON-NLS-1$
+        TestingWorkspaceUtils.checkNoIssue("v3_1_1", //$NON-NLS-1$
             "src/Documents/НенужныеПроцедурыИВызовы/Forms/ФормаДокумента/Module.bsl", //$NON-NLS-1$
             ObjectFormModuleValidator.ERROR_METHOD_REREAD_COMMANDS_NOT_EXISTS);
     }

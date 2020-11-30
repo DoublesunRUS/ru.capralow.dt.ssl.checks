@@ -15,7 +15,7 @@ import com._1c.g5.v8.dt.testing.TestingWorkspace;
 import ru.capralow.dt.ssl.checks.SslVersionChecker;
 import ru.capralow.dt.ssl.checks.internal.attachablecommands_v3_1_1.AttacheableCommandsPlugin;
 
-public class SslVersionCheckerTests
+public class SslVersionCheckerTest
 {
 
     @ClassRule
@@ -24,7 +24,7 @@ public class SslVersionCheckerTests
     @BeforeClass
     public static void setUp() throws Exception
     {
-        testingWorkspace.setUpProject("v3_1_1", SslVersionCheckerTests.class); //$NON-NLS-1$
+        testingWorkspace.setUpProject("v3_1_1", SslVersionCheckerTest.class); //$NON-NLS-1$
     }
 
     private static void testFalseVersion(String startVersion)

@@ -12,7 +12,7 @@ import com._1c.g5.v8.dt.testing.TestingWorkspace;
 
 import ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1.validator.ObjectFormModuleValidator;
 
-public class ObjectFormModuleValidatorReportsTests
+public class ObjectFormModuleValidatorReportsTest
 {
 
     @ClassRule
@@ -21,7 +21,7 @@ public class ObjectFormModuleValidatorReportsTests
     @BeforeClass
     public static void setUp() throws Exception
     {
-        testingWorkspace.setUpProject("v2_4_1", ObjectFormModuleValidatorReportsTests.class); //$NON-NLS-1$
+        testingWorkspace.setUpProject("v2_4_1", ObjectFormModuleValidatorReportsTest.class); //$NON-NLS-1$
     }
 
     @Test

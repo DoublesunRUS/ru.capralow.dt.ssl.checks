@@ -11,7 +11,7 @@ import com._1c.g5.v8.dt.testing.TestingWorkspace;
 
 import ru.capralow.dt.ssl.checks.attachablecommands_v3_1_1.validator.ObjectFormModuleValidator;
 
-public class ObjectFormModuleValidatorNotConnectedTests
+public class ObjectFormModuleValidatorNotConnectedTest
 {
 
     @ClassRule
@@ -20,7 +20,7 @@ public class ObjectFormModuleValidatorNotConnectedTests
     @BeforeClass
     public static void setUp() throws Exception
     {
-        testingWorkspace.setUpProject("v3_1_1", ObjectFormModuleValidatorNotConnectedTests.class); //$NON-NLS-1$
+        testingWorkspace.setUpProject("v3_1_1", ObjectFormModuleValidatorNotConnectedTest.class); //$NON-NLS-1$
     }
 
     @Test

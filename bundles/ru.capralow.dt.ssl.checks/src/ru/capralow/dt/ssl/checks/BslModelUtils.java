@@ -48,6 +48,8 @@ import com._1c.g5.v8.dt.metadata.mdclass.BasicDbObject;
 import com._1c.g5.v8.dt.metadata.mdclass.CommonModule;
 import com._1c.g5.v8.dt.metadata.mdclass.Subsystem;
 
+import ru.capralow.dt.ssl.checks.internal.SslPlugin;
+
 public final class BslModelUtils
 {
 
@@ -144,7 +146,12 @@ public final class BslModelUtils
         List<FeatureEntry> featureEntries = dynamicFeatureAccessComputer.resolveObject(staticMethodAccess,
             EcoreUtil2.getContainerOfType(staticMethodAccess, Environmental.class).environments());
         if (featureEntries.isEmpty())
-            return;
+        {
+            String errorMessage = "DynamicFeatureAccessComputer не смог получить FeatureEntries";
+            IllegalStateException exception = new IllegalStateException();
+            SslPlugin.log(SslPlugin.createErrorStatus(errorMessage, exception));
+            throw exception;
+        }
 
         FeatureEntry featureEntry = featureEntries.get(0);
         EObject feature = featureEntry.getFeature();
@@ -194,7 +201,12 @@ public final class BslModelUtils
                     List<FeatureEntry> featureEntries = dynamicFeatureAccessComputer.resolveObject(firstParam,
                         EcoreUtil2.getContainerOfType(firstParam, Environmental.class).environments());
                     if (featureEntries.isEmpty())
-                        return;
+                    {
+                        String errorMessage = "DynamicFeatureAccessComputer не смог получить FeatureEntries";
+                        IllegalStateException exception = new IllegalStateException();
+                        SslPlugin.log(SslPlugin.createErrorStatus(errorMessage, exception));
+                        throw exception;
+                    }
 
                     FeatureEntry featureEntry = featureEntries.get(0);
                     DerivedProperty deriveredProperty = (DerivedProperty)featureEntry.getFeature();

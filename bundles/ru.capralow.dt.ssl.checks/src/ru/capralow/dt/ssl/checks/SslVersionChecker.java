@@ -5,8 +5,6 @@ package ru.capralow.dt.ssl.checks;
 
 import java.text.MessageFormat;
 
-import org.eclipse.xtext.EcoreUtil2;
-
 import com._1c.g5.v8.dt.bsl.model.DynamicFeatureAccess;
 import com._1c.g5.v8.dt.bsl.model.Method;
 import com._1c.g5.v8.dt.bsl.model.Module;
@@ -66,7 +64,7 @@ public final class SslVersionChecker
             return version;
 
         Module module = ((CommonModule)mdObject).getModule();
-        EcoreUtil2.resolveLazyCrossReferences(module.eResource(), null);
+        BslModelUtils.customResolveLazyCrossReferences(module.eResource());
 
         Method method = MdUtils.getMethod(module, "ПриДобавленииПодсистемы"); //$NON-NLS-1$
         if (method == null)

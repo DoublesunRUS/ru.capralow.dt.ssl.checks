@@ -6,7 +6,6 @@ package ru.capralow.dt.ssl.checks.attachablecommands_v3_1_1.validator.tests;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.resource.XtextResource;
@@ -22,6 +21,8 @@ import com._1c.g5.v8.dt.core.handle.impl.V8ModelManager;
 import com._1c.g5.v8.dt.core.handle.impl.V8XtextFile;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
+
+import ru.capralow.dt.ssl.checks.BslModelUtils;
 
 public class TestingWorkspaceUtils
 {
@@ -79,7 +80,7 @@ public class TestingWorkspaceUtils
                 IResourceValidator validator = provider.get(IResourceValidator.class);
                 Assert.assertNotNull(validator);
 
-                EcoreUtil2.resolveLazyCrossReferences(resource, null);
+                BslModelUtils.customResolveLazyCrossReferences(resource);
 
                 return validator.validate(resource, CheckMode.ALL, null);
             }

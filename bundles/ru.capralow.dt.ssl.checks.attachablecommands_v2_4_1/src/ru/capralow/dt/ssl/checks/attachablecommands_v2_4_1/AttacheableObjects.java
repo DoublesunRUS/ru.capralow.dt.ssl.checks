@@ -7,8 +7,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.xtext.EcoreUtil2;
-
 import com._1c.g5.v8.dt.bsl.model.Method;
 import com._1c.g5.v8.dt.bsl.model.Module;
 import com._1c.g5.v8.dt.core.platform.IV8Project;
@@ -55,7 +53,7 @@ public final class AttacheableObjects
             return;
 
         Module module = ((CommonModule)mdObject).getModule();
-        EcoreUtil2.resolveLazyCrossReferences(module.eResource(), null);
+        BslModelUtils.customResolveLazyCrossReferences(module.eResource());
 
         Method method = MdUtils.getMethod(module, "ПриОпределенииОбъектовСКомандамиЗаполнения"); //$NON-NLS-1$
         if (method == null)
@@ -73,7 +71,7 @@ public final class AttacheableObjects
             return;
 
         Module module = ((CommonModule)mdObject).getModule();
-        EcoreUtil2.resolveLazyCrossReferences(module.eResource(), null);
+        BslModelUtils.customResolveLazyCrossReferences(module.eResource());
 
         Method method = MdUtils.getMethod(module, "ПриОпределенииОбъектовСКомандамиПечати"); //$NON-NLS-1$
         if (method == null)
@@ -91,7 +89,7 @@ public final class AttacheableObjects
             return;
 
         Module module = ((CommonModule)mdObject).getModule();
-        EcoreUtil2.resolveLazyCrossReferences(module.eResource(), null);
+        BslModelUtils.customResolveLazyCrossReferences(module.eResource());
 
         Method method = MdUtils.getMethod(module, "ОпределитьОбъектыСКомандамиОтчетов"); //$NON-NLS-1$
         if (method == null)

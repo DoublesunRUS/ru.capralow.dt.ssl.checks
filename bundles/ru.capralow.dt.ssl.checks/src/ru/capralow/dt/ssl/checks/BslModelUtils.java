@@ -4,6 +4,7 @@
 package ru.capralow.dt.ssl.checks;
 
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.nodemodel.ILeafNode;
@@ -38,6 +40,8 @@ import com._1c.g5.v8.dt.bsl.model.SourceObjectLinkProvider;
 import com._1c.g5.v8.dt.bsl.model.Statement;
 import com._1c.g5.v8.dt.bsl.model.StaticFeatureAccess;
 import com._1c.g5.v8.dt.bsl.model.StringLiteral;
+import com._1c.g5.v8.dt.bsl.resource.BslResolveCrossReferencesJob;
+import com._1c.g5.v8.dt.bsl.resource.BslResource;
 import com._1c.g5.v8.dt.bsl.resource.DynamicFeatureAccessComputer;
 import com._1c.g5.v8.dt.core.platform.IV8Project;
 import com._1c.g5.v8.dt.mcore.DerivedProperty;
@@ -56,6 +60,23 @@ public final class BslModelUtils
     private static DynamicFeatureAccessComputer dynamicFeatureAccessComputer =
         IResourceServiceProvider.Registry.INSTANCE.getResourceServiceProvider(URI.createURI("foo.bsl")).get( //$NON-NLS-1$
             DynamicFeatureAccessComputer.class);
+
+    public static void customResolveLazyCrossReferences(Resource resource)
+    {
+        BslResource bslResource = (BslResource)resource;
+
+        EcoreUtil2.resolveLazyCrossReferences(bslResource, null);
+        Collection<BslResolveCrossReferencesJob> jobs = BslResolveCrossReferencesJob.findJobsByResource(bslResource);
+        for (BslResolveCrossReferencesJob job : jobs)
+            try
+            {
+                job.join();
+            }
+            catch (InterruptedException e)
+            {
+                SslPlugin.log(SslPlugin.createErrorStatus(e.getMessage(), e));
+            }
+    }
 
     public static INode getEndBracketParamsNode(Method method)
     {
@@ -117,7 +138,7 @@ public final class BslModelUtils
                 return;
 
             Module module = commonModule.getModule();
-            EcoreUtil2.resolveLazyCrossReferences(module.eResource(), null);
+            customResolveLazyCrossReferences(module.eResource());
 
             method = MdUtils.getMethod(module, dynamicMethodAccess.getName());
             if (method == null)

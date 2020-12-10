@@ -6,7 +6,6 @@ package ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1.validator;
 import static com._1c.g5.v8.dt.bsl.model.BslPackage.Literals.MODULE__CONTEXT_DEF;
 import static com._1c.g5.v8.dt.bsl.model.BslPackage.Literals.SIMPLE_STATEMENT__LEFT;
 import static com._1c.g5.v8.dt.mcore.McorePackage.Literals.NAMED_ELEMENT__NAME;
-import static com._1c.g5.v8.dt.metadata.mdclass.MdClassPackage.Literals.BASIC_FORM__FORM;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -14,8 +13,6 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.util.CancelIndicator;
 
-import com._1c.g5.v8.bm.core.IBmCrossReference;
-import com._1c.g5.v8.bm.core.IBmObject;
 import com._1c.g5.v8.dt.bsl.model.DynamicFeatureAccess;
 import com._1c.g5.v8.dt.bsl.model.Expression;
 import com._1c.g5.v8.dt.bsl.model.FeatureAccess;
@@ -29,16 +26,9 @@ import com._1c.g5.v8.dt.bsl.validation.CustomValidationMessageAcceptor;
 import com._1c.g5.v8.dt.bsl.validation.IExternalBslValidator;
 import com._1c.g5.v8.dt.core.platform.IV8Project;
 import com._1c.g5.v8.dt.core.platform.IV8ProjectManager;
-import com._1c.g5.v8.dt.form.model.Form;
-import com._1c.g5.v8.dt.form.model.FormAttribute;
-import com._1c.g5.v8.dt.form.service.FormUtil;
-import com._1c.g5.v8.dt.mcore.TypeItem;
-import com._1c.g5.v8.dt.mcore.util.McoreUtil;
-import com._1c.g5.v8.dt.md.resource.MdTypeUtil;
-import com._1c.g5.v8.dt.metadata.mdclass.BasicDbObject;
-import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
+import ru.capralow.dt.ssl.checks.MdUtils;
 import ru.capralow.dt.ssl.checks.SslVersionChecker;
 import ru.capralow.dt.ssl.checks.attachablecommands_v2_4_1.AttacheableObjects;
 
@@ -125,38 +115,6 @@ public class ObjectFormModuleValidator
         }
 
         return null;
-    }
-
-    private static String getObjectName(Module module)
-    {
-        Form moduleForm = (Form)module.getOwner();
-        FormAttribute mainAttribute = FormUtil.getMainAttribute(moduleForm);
-        if (mainAttribute == null)
-            return ""; //$NON-NLS-1$
-
-        if (FormUtil.isListForm(moduleForm, mainAttribute))
-            return ""; //$NON-NLS-1$
-
-        TypeItem mainType = FormUtil.getExactAttributeType(mainAttribute);
-
-        String mainTypeName = McoreUtil.getTypeName(mainType);
-
-        if ("DynamicList".equals(mainTypeName)) //$NON-NLS-1$
-            return ""; // Пока isListForm не работает //$NON-NLS-1$
-
-        if (!mainTypeName.contains("Object.")) //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-
-        IBmCrossReference moduleReference = Iterables.find(moduleForm.bmGetReferences(),
-            reference -> reference.getFeature().equals(BASIC_FORM__FORM), null);
-        if (moduleReference == null)
-            return ""; //$NON-NLS-1$
-        IBmObject moduleObject = moduleReference.getObject().bmGetTopObject();
-
-        if (!(moduleObject instanceof BasicDbObject))
-            return ""; //$NON-NLS-1$
-
-        return MdTypeUtil.getRefType((BasicDbObject)moduleObject).getName();
     }
 
     private static void validateExecuteCommand(boolean objectConnected, Method method, Module module,
@@ -361,7 +319,7 @@ public class ObjectFormModuleValidator
 
         Module module = (Module)object;
 
-        String objectName = getObjectName(module);
+        String objectName = MdUtils.getObjectNameForObjectFormModule(module);
         if (objectName.isEmpty())
             return;
 

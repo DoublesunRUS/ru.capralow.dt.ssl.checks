@@ -6,6 +6,7 @@ package ru.capralow.dt.ssl.checks.internal.attachablecommands_v3_1_1.ui.quickfix
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
@@ -32,6 +34,7 @@ import com._1c.g5.v8.bm.integration.AbstractBmTask;
 import com._1c.g5.v8.dt.bsl.model.Method;
 import com._1c.g5.v8.dt.bsl.model.Module;
 import com._1c.g5.v8.dt.bsl.model.RegionPreprocessor;
+import com._1c.g5.v8.dt.bsl.model.Statement;
 import com._1c.g5.v8.dt.bsl.model.util.BslUtil;
 import com._1c.g5.v8.dt.bsl.ui.quickfix.AbstractExternalQuickfixProvider;
 import com._1c.g5.v8.dt.core.operations.model.IEditingContext;
@@ -62,78 +65,29 @@ import ru.capralow.dt.ssl.checks.internal.attachablecommands_v3_1_1.ui.Attacheab
 public class ObjectFormModuleQuickFix
     extends AbstractExternalQuickfixProvider
 {
-
-    private static final String ON_CREATE_AT_SERVER_TEMPLATE_NAME_RU = "OnCreateAtServerRu.txt"; //$NON-NLS-1$
-    private static String onCreateAtServerTemplateContentRu;
-    private static final String ON_CREATE_AT_SERVER_TEMPLATE_NAME_EN = "OnCreateAtServerEn.txt"; //$NON-NLS-1$
-
-    private static String onCreateAtServerTemplateContentEn;
-
-    static
+    private static void addCallToFormHandler(String eventName, String handlerName, final Issue issue,
+        final IssueResolutionAcceptor acceptor, IV8ProjectManager projectManager)
     {
-        onCreateAtServerTemplateContentRu = readContents(getFileInputSupplier(ON_CREATE_AT_SERVER_TEMPLATE_NAME_RU));
-        onCreateAtServerTemplateContentEn = readContents(getFileInputSupplier(ON_CREATE_AT_SERVER_TEMPLATE_NAME_EN));
-    }
-    private static final String ON_CREATE_AT_SERVER_CALL_TEMPLATE_NAME_RU = "OnCreateAtServerCallRu.txt"; //$NON-NLS-1$
-    private static String onCreateAtServerCallTemplateContentRu;
-    private static final String ON_CREATE_AT_SERVER_CALL_TEMPLATE_NAME_EN = "OnCreateAtServerCallEn.txt"; //$NON-NLS-1$
+        String errorTitle =
+            MessageFormat.format(Messages.Error_ObjectFormModule_FormHandler0MissingCall_Title, handlerName);
+        String errorDesc =
+            MessageFormat.format(Messages.Error_ObjectFormModule_FormHandler0MissingCall_Description, handlerName);
 
-    private static String onCreateAtServerCallTemplateContentEn;
+        acceptor.accept(issue, errorTitle, errorDesc, null,
+            new ExternalQuickfixModification<>(issue, Method.class, method -> {
+                Module module = EcoreUtil2.getContainerOfType(method, Module.class);
+                String formMainAttributeName = MdUtils.getFormMainAttributeNameForModule(module);
+                ScriptVariant scriptVariant = getScriptVariant(module, projectManager);
+                String template = getFormHandlerCallTemplate(eventName, formMainAttributeName, scriptVariant);
 
-    static
-    {
-        onCreateAtServerCallTemplateContentRu =
-            readContents(getFileInputSupplier(ON_CREATE_AT_SERVER_CALL_TEMPLATE_NAME_RU));
-        onCreateAtServerCallTemplateContentEn =
-            readContents(getFileInputSupplier(ON_CREATE_AT_SERVER_CALL_TEMPLATE_NAME_EN));
-    }
-    private static final String ON_READ_AT_SERVER_TEMPLATE_NAME_RU = "OnReadAtServerRu.txt"; //$NON-NLS-1$
-    private static String onReadAtServerTemplateContentRu;
-    private static final String ON_READ_AT_SERVER_TEMPLATE_NAME_EN = "OnReadAtServerEn.txt"; //$NON-NLS-1$
+                int insertOffset = getMethodInsertOffset(method);
 
-    private static String onReadAtServerTemplateContentEn;
-
-    static
-    {
-        onReadAtServerTemplateContentRu = readContents(getFileInputSupplier(ON_READ_AT_SERVER_TEMPLATE_NAME_RU));
-        onReadAtServerTemplateContentEn = readContents(getFileInputSupplier(ON_READ_AT_SERVER_TEMPLATE_NAME_EN));
-    }
-    private static final String ON_READ_AT_SERVER_CALL_TEMPLATE_NAME_RU = "OnReadAtServerCallRu.txt"; //$NON-NLS-1$
-    private static String onReadAtServerCallTemplateContentRu;
-    private static final String ON_READ_AT_SERVER_CALL_TEMPLATE_NAME_EN = "OnReadAtServerCallEn.txt"; //$NON-NLS-1$
-
-    private static String onReadAtServerCallTemplateContentEn;
-
-    static
-    {
-        onReadAtServerCallTemplateContentRu =
-            readContents(getFileInputSupplier(ON_READ_AT_SERVER_CALL_TEMPLATE_NAME_RU));
-        onReadAtServerCallTemplateContentEn =
-            readContents(getFileInputSupplier(ON_READ_AT_SERVER_CALL_TEMPLATE_NAME_EN));
+                return new InsertEdit(insertOffset, System.lineSeparator() + System.lineSeparator() + template);
+            }));
     }
 
-    private static CharSource getFileInputSupplier(String partName)
-    {
-        return Resources.asCharSource(AttacheableCommandsUiPlugin.class.getResource("/resources/" + partName), //$NON-NLS-1$
-            StandardCharsets.UTF_8);
-    }
-
-    private static String readContents(CharSource source)
-    {
-        try (Reader reader = source.openBufferedStream())
-        {
-            return CharStreams.toString(reader);
-        }
-        catch (IOException | NullPointerException e)
-        {
-            return ""; //$NON-NLS-1$
-        }
-    }
-
-    @Inject
-    private IV8ProjectManager projectManager;
-
-    private void addEventHandler(Form moduleForm, String eventName, String handlerName, IBmTransaction transaction)
+    private static void addEventHandler(Form moduleForm, String eventName, String handlerName,
+        IBmTransaction transaction)
     {
         boolean isExtension = moduleForm.getMdForm().getObjectBelonging() != ObjectBelonging.NATIVE;
         Form editing = transaction.toTransactionObject(moduleForm);
@@ -153,11 +107,46 @@ public class ObjectFormModuleQuickFix
 
     }
 
-    @Fix(ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_AT_SERVER_MISSING_EXPORT)
-    public void executeCommandAtServerAddExport(final Issue issue, final IssueResolutionAcceptor acceptor)
+    private static void addEventHandlerUi(String eventName, String handlerName, String errorTitle, Module module)
     {
-        acceptor.accept(issue, Messages.Error_ObjectFormModule_MethodExecuteCommandAtServerMissingExport_Title,
-            Messages.Error_ObjectFormModule_MethodExecuteCommandAtServerMissingExport_Description, null,
+        Form moduleForm = (Form)module.getOwner();
+
+        if (PlatformUI.getWorkbench() != null && moduleForm.getMdForm() != null)
+        {
+            PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
+                IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+                if (activeWorkbenchWindow != null && activeWorkbenchWindow.getActivePage() != null)
+                {
+                    IDtEditor<?> dtEditor = getDtEditorByModel(moduleForm, activeWorkbenchWindow.getActivePage());
+                    if (dtEditor != null)
+                    {
+                        IEditingContext editingContext = dtEditor.getApiEditingContext();
+                        if (!editingContext.isDisposed())
+                        {
+                            editingContext.execute(new AbstractBmTask<IStatus>(errorTitle)
+                            {
+                                @Override
+                                public IStatus execute(IBmTransaction transaction, IProgressMonitor monitor)
+                                {
+                                    addEventHandler(moduleForm, eventName, handlerName, transaction);
+                                    return Status.OK_STATUS;
+                                }
+                            }, new NullProgressMonitor());
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    private static void addExport(String handlerName, final Issue issue, final IssueResolutionAcceptor acceptor)
+    {
+        String errorTitle =
+            MessageFormat.format(Messages.Error_ObjectFormModule_Method0MissingExport_Title, handlerName);
+        String errorDesc =
+            MessageFormat.format(Messages.Error_ObjectFormModule_Method0MissingExport_Description, handlerName);
+
+        acceptor.accept(issue, errorTitle, errorDesc, null,
             new ExternalQuickfixModification<>(issue, Method.class, method -> {
                 INode bracketNode = BslModelUtils.getEndBracketParamsNode(method);
                 if (bracketNode == null)
@@ -167,7 +156,46 @@ public class ObjectFormModuleQuickFix
             }));
     }
 
-    private IDtEditor<?> getDtEditorByModel(Form form, IWorkbenchPage activePage)
+    private static void addFormHandler(String eventName, String handlerName, final Issue issue,
+        final IssueResolutionAcceptor acceptor, IV8ProjectManager projectManager)
+    {
+        String errorTitle =
+            MessageFormat.format(Messages.Error_ObjectFormModule_FormHandler0NotExists_Title, handlerName);
+        String errorDesc =
+            MessageFormat.format(Messages.Error_ObjectFormModule_FormHandler0NotExists_Description, handlerName);
+
+        acceptor.accept(issue, errorTitle, errorDesc, null,
+            new ExternalQuickfixModification<>(issue, Module.class, module -> {
+                addEventHandlerUi(eventName, handlerName, errorTitle, module);
+
+                String formMainAttributeName = MdUtils.getFormMainAttributeNameForModule(module);
+                ScriptVariant scriptVariant = getScriptVariant(module, projectManager);
+
+                String template = getFormHandlerTemplate(eventName, formMainAttributeName, scriptVariant);
+
+                int insertOffset = getModuleInsertOffset(module, "ОбработчикиСобытийФормы"); //$NON-NLS-1$
+
+                return new InsertEdit(insertOffset, System.lineSeparator() + System.lineSeparator() + template);
+            }));
+    }
+
+    private static void addMethods(final Issue issue, final IssueResolutionAcceptor acceptor,
+        IV8ProjectManager projectManager)
+    {
+        acceptor.accept(issue, Messages.Error_ObjectFormModule_MethodsNotExists_Title,
+            Messages.Error_ObjectFormModule_MethodsNotExists_Description, null,
+            new ExternalQuickfixModification<>(issue, Module.class, module -> {
+                String formMainAttributeName = MdUtils.getFormMainAttributeNameForModule(module);
+                ScriptVariant scriptVariant = getScriptVariant(module, projectManager);
+                String template = getMethodsTemplate(formMainAttributeName, scriptVariant);
+
+                int insertOffset = getModuleInsertOffset(module, "СлужебныеПроцедурыИФункции"); //$NON-NLS-1$
+
+                return new InsertEdit(insertOffset, System.lineSeparator() + System.lineSeparator() + template);
+            }));
+    }
+
+    private static IDtEditor<?> getDtEditorByModel(Form form, IWorkbenchPage activePage)
     {
         for (IEditorReference reference : activePage.getEditorReferences())
         {
@@ -190,124 +218,163 @@ public class ObjectFormModuleQuickFix
         return null;
     }
 
-    @Fix(ObjectFormModuleValidator.ERROR_METHOD_ON_CREATE_AT_SERVER_NOT_EXISTS)
-    public void onCreateAtServerAddCommand(final Issue issue, final IssueResolutionAcceptor acceptor)
+    private static CharSource getFileInputSupplier(String partName)
     {
-        acceptor.accept(issue, Messages.Error_ObjectFormModule_MethodOnCreateAtServerNotExists_Title,
-            Messages.Error_ObjectFormModule_MethodOnCreateAtServerNotExists_Description, null,
-            new ExternalQuickfixModification<>(issue, Module.class, module -> {
+        return Resources.asCharSource(AttacheableCommandsUiPlugin.class.getResource("/resources/" + partName), //$NON-NLS-1$
+            StandardCharsets.UTF_8);
+    }
 
-                Form moduleForm = (Form)module.getOwner();
+    private static String getFormHandlerCallTemplate(String eventName, String formMainAttributeName,
+        ScriptVariant scriptVariant)
+    {
+        String suffix = "En"; //$NON-NLS-1$
+        if (scriptVariant.equals(ScriptVariant.RUSSIAN))
+            suffix = "Ru"; //$NON-NLS-1$
 
-                if (PlatformUI.getWorkbench() != null && moduleForm.getMdForm() != null)
+        String templateCallContent = readContents(getFileInputSupplier(eventName + "Call" + suffix + ".txt")); //$NON-NLS-1$ //$NON-NLS-2$
+
+        StringTemplate template = new StringTemplate(templateCallContent);
+        template.setAttribute("FormMainAttribute", formMainAttributeName); //$NON-NLS-1$
+
+        return template.toString();
+    }
+
+    private static String getFormHandlerTemplate(String eventName, String formMainAttributeName,
+        ScriptVariant scriptVariant)
+    {
+        String suffix = "En"; //$NON-NLS-1$
+        if (scriptVariant.equals(ScriptVariant.RUSSIAN))
+            suffix = "Ru"; //$NON-NLS-1$
+
+        String templateContent = readContents(getFileInputSupplier(eventName + suffix + ".txt")); //$NON-NLS-1$
+        String templateCallContent = readContents(getFileInputSupplier(eventName + "Call" + suffix + ".txt")); //$NON-NLS-1$ //$NON-NLS-2$
+
+        StringTemplate templateCall = new StringTemplate(templateCallContent);
+        templateCall.setAttribute("FormMainAttribute", formMainAttributeName); //$NON-NLS-1$
+
+        StringTemplate template = new StringTemplate(templateContent);
+        template.setAttribute("Call", templateCall.toString()); //$NON-NLS-1$
+
+        return template.toString();
+    }
+
+    private static int getMethodInsertOffset(Method method)
+    {
+        ICompositeNode methodNode = NodeModelUtils.findActualNodeFor(method);
+        int insertOffset = methodNode.getTotalEndOffset();
+
+        Statement statement = BslModelUtils.getNearestStatement(method, insertOffset - 1);
+        if (statement != null)
+            insertOffset = NodeModelUtils.findActualNodeFor(statement).getTotalEndOffset() + 1;
+
+        return insertOffset;
+    }
+
+    private static String getMethodsTemplate(String formMainAttributeName, ScriptVariant scriptVariant)
+    {
+        String suffix = "En"; //$NON-NLS-1$
+        if (scriptVariant.equals(ScriptVariant.RUSSIAN))
+            suffix = "Ru"; //$NON-NLS-1$
+
+        String templateContent = readContents(getFileInputSupplier("AttachableCommands" + suffix + ".txt")); //$NON-NLS-1$ //$NON-NLS-2$
+
+        StringTemplate template = new StringTemplate(templateContent);
+        template.setAttribute("FormMainAttribute", formMainAttributeName); //$NON-NLS-1$
+
+        return template.toString();
+    }
+
+    private static int getModuleInsertOffset(Module module, String regionName)
+    {
+        ICompositeNode moduleNode = NodeModelUtils.findActualNodeFor(module);
+        int insertOffset = moduleNode.getTotalEndOffset();
+
+        List<RegionPreprocessor> regions = BslUtil.getAllRegionPreprocessors(module);
+        if (!regions.isEmpty())
+            for (RegionPreprocessor region : regions)
+                if (region.getName().equalsIgnoreCase(regionName))
                 {
-                    PlatformUI.getWorkbench().getDisplay().asyncExec(() -> {
-                        IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-                        if (activeWorkbenchWindow != null && activeWorkbenchWindow.getActivePage() != null)
-                        {
-                            IDtEditor<?> dtEditor =
-                                getDtEditorByModel(moduleForm, activeWorkbenchWindow.getActivePage());
-                            if (dtEditor != null)
-                            {
-                                IEditingContext editingContext = dtEditor.getApiEditingContext();
-                                if (!editingContext.isDisposed())
-                                {
-                                    editingContext.execute(new AbstractBmTask<IStatus>(
-                                        Messages.Error_ObjectFormModule_MethodOnCreateAtServerNotExists_Title)
-                                    {
-                                        @Override
-                                        public IStatus execute(IBmTransaction transaction, IProgressMonitor monitor)
-                                        {
-                                            addEventHandler(moduleForm, "OnCreateAtServer", "ПриСозданииНаСервере", //$NON-NLS-1$ //$NON-NLS-2$
-                                                transaction);
-                                            return Status.OK_STATUS;
-                                        }
-                                    }, new NullProgressMonitor());
-                                }
-                            }
-                        }
-                    });
+                    insertOffset = NodeModelUtils.findActualNodeFor(region.getItem()).getTotalEndOffset();
+                    break;
                 }
 
-                IV8Project v8Project = projectManager.getProject(module);
-                Configuration configuration = MdUtils.getConfigurationForProject(v8Project);
+        return insertOffset;
+    }
 
-                String templateContent;
-                String templateCallContent;
-                if (configuration.getScriptVariant().equals(ScriptVariant.RUSSIAN))
-                {
-                    templateContent = onCreateAtServerTemplateContentRu;
-                    templateCallContent = onCreateAtServerCallTemplateContentRu;
-                }
-                else
-                {
-                    templateContent = onCreateAtServerTemplateContentEn;
-                    templateCallContent = onCreateAtServerCallTemplateContentEn;
-                }
+    private static ScriptVariant getScriptVariant(Module module, IV8ProjectManager projectManager)
+    {
+        IV8Project v8Project = projectManager.getProject(module);
+        Configuration configuration = MdUtils.getConfigurationForProject(v8Project);
 
-                StringTemplate template = new StringTemplate(templateContent);
-                template.setAttribute("Call", templateCallContent); //$NON-NLS-1$
+        return configuration.getScriptVariant();
+    }
 
-                ICompositeNode moduleNode = NodeModelUtils.findActualNodeFor(module);
-                int insertOffset = moduleNode.getTotalEndOffset();
+    private static String readContents(CharSource source)
+    {
+        try (Reader reader = source.openBufferedStream())
+        {
+            return CharStreams.toString(reader);
+        }
+        catch (IOException | NullPointerException e)
+        {
+            return ""; //$NON-NLS-1$
+        }
+    }
 
-                List<RegionPreprocessor> regions = BslUtil.getAllRegionPreprocessors(module);
-                if (!regions.isEmpty())
-                    for (RegionPreprocessor region : regions)
-                        if (region.getName().equalsIgnoreCase("ОбработчикиСобытийФормы")) //$NON-NLS-1$
-                        {
-                            insertOffset = NodeModelUtils.findActualNodeFor(region.getItem()).getTotalEndOffset();
-                            break;
-                        }
+    @Inject
+    private IV8ProjectManager projectManager;
 
-                return new InsertEdit(insertOffset,
-                    System.lineSeparator() + System.lineSeparator() + template.toString());
-            }));
+    @Fix(ObjectFormModuleValidator.ERROR_METHODS_NOT_EXISTS)
+    public void executeAddMethods(final Issue issue, final IssueResolutionAcceptor acceptor)
+    {
+        addMethods(issue, acceptor, projectManager);
+    }
+
+    @Fix(ObjectFormModuleValidator.ERROR_METHOD_EXECUTE_COMMAND_AT_SERVER_MISSING_EXPORT)
+    public void executeCommandAtServerAddExport(final Issue issue, final IssueResolutionAcceptor acceptor)
+    {
+        addExport("ВыполнитьКомандуНаСервере", issue, acceptor); //$NON-NLS-1$
+    }
+
+    @Fix(ObjectFormModuleValidator.ERROR_METHOD_ON_CREATE_AT_SERVER_MISSING_CALL)
+    public void onCreateAtServerAddCall(final Issue issue, final IssueResolutionAcceptor acceptor)
+    {
+        addCallToFormHandler("OnCreateAtServer", "ПриСозданииНаСервере", //$NON-NLS-1$ //$NON-NLS-2$
+            issue, acceptor, projectManager);
+    }
+
+    @Fix(ObjectFormModuleValidator.ERROR_METHOD_ON_CREATE_AT_SERVER_NOT_EXISTS)
+    public void onCreateAtServerAddHandler(final Issue issue, final IssueResolutionAcceptor acceptor)
+    {
+        addFormHandler("OnCreateAtServer", "ПриСозданииНаСервере", //$NON-NLS-1$ //$NON-NLS-2$
+            issue, acceptor, projectManager);
+    }
+
+    @Fix(ObjectFormModuleValidator.ERROR_METHOD_ON_OPEN_MISSING_CALL)
+    public void onOpenAddCall(final Issue issue, final IssueResolutionAcceptor acceptor)
+    {
+        addCallToFormHandler("OnOpen", "ПриОткрытии", //$NON-NLS-1$ //$NON-NLS-2$
+            issue, acceptor, projectManager);
+    }
+
+    @Fix(ObjectFormModuleValidator.ERROR_METHOD_ON_OPEN_NOT_EXISTS)
+    public void onOpenAddHandler(final Issue issue, final IssueResolutionAcceptor acceptor)
+    {
+        addFormHandler("OnOpen", "ПриОткрытии", //$NON-NLS-1$ //$NON-NLS-2$
+            issue, acceptor, projectManager);
+    }
+
+    @Fix(ObjectFormModuleValidator.ERROR_METHOD_ON_READ_AT_SERVER_MISSING_CALL)
+    public void onReadAtServerAddCall(final Issue issue, final IssueResolutionAcceptor acceptor)
+    {
+        addCallToFormHandler("OnReadAtServer", "ПриЧтенииНаСервере", //$NON-NLS-1$ //$NON-NLS-2$
+            issue, acceptor, projectManager);
     }
 
     @Fix(ObjectFormModuleValidator.ERROR_METHOD_ON_READ_AT_SERVER_NOT_EXISTS)
-    public void onReadAtServerAddCommand(final Issue issue, final IssueResolutionAcceptor acceptor)
+    public void onReadAtServerAddHandler(final Issue issue, final IssueResolutionAcceptor acceptor)
     {
-        acceptor.accept(issue, Messages.Error_ObjectFormModule_MethodOnReadAtServerNotExists_Title,
-            Messages.Error_ObjectFormModule_MethodOnReadAtServerNotExists_Description, null,
-            new ExternalQuickfixModification<>(issue, Module.class, module -> {
-
-                IV8Project v8Project = projectManager.getProject(module);
-                Configuration configuration = MdUtils.getConfigurationForProject(v8Project);
-
-                String templateContent;
-                String templateCallContent;
-                if (configuration.getScriptVariant().equals(ScriptVariant.RUSSIAN))
-                {
-                    templateContent = onReadAtServerTemplateContentRu;
-                    templateCallContent = onReadAtServerCallTemplateContentRu;
-                }
-                else
-                {
-                    templateContent = onReadAtServerTemplateContentEn;
-                    templateCallContent = onReadAtServerCallTemplateContentEn;
-                }
-
-                StringTemplate templateCall = new StringTemplate(templateCallContent);
-                templateCall.setAttribute("Object", "Объект"); //$NON-NLS-1$ //$NON-NLS-2$
-
-                StringTemplate template = new StringTemplate(templateContent);
-                template.setAttribute("Call", templateCall.toString()); //$NON-NLS-1$
-
-                ICompositeNode moduleNode = NodeModelUtils.findActualNodeFor(module);
-                int insertOffset = moduleNode.getTotalEndOffset();
-
-                List<RegionPreprocessor> regions = BslUtil.getAllRegionPreprocessors(module);
-                if (!regions.isEmpty())
-                    for (RegionPreprocessor region : regions)
-                        if (region.getName().equalsIgnoreCase("ОбработчикиСобытийФормы")) //$NON-NLS-1$
-                        {
-                            insertOffset = NodeModelUtils.findActualNodeFor(region.getItem()).getTotalEndOffset();
-                            break;
-                        }
-
-                return new InsertEdit(insertOffset,
-                    System.lineSeparator() + System.lineSeparator() + template.toString());
-            }));
+        addFormHandler("OnReadAtServer", "ПриЧтенииНаСервере", //$NON-NLS-1$ //$NON-NLS-2$
+            issue, acceptor, projectManager);
     }
 }

@@ -11,31 +11,23 @@ final class Messages
     private static final String BUNDLE_NAME =
         "ru.capralow.dt.ssl.checks.internal.attachablecommands_v3_1_1.ui.quickfix.messages"; //$NON-NLS-1$
 
-    public static String Error_ObjectFormModule_MethodOnCreateAtServerNotExists_Title;
-    public static String Error_ObjectFormModule_MethodOnCreateAtServerNotExists_Description;
-    public static String Error_ObjectFormModule_MethodOnReadAtServerNotExists_Title;
-    public static String Error_ObjectFormModule_MethodOnReadAtServerNotExists_Description;
-    public static String Error_ObjectFormModule_MethodOnOpenNotExists;
-    public static String Error_ObjectFormModule_MethodExecuteCommandNotExists;
-    public static String Error_ObjectFormModule_MethodExecuteCommandAtServerNotExists;
-    public static String Error_ObjectFormModule_MethodRereadCommandsNotExists;
+    public static String Error_ObjectFormModule_FormHandler0NotExists_Title;
+    public static String Error_ObjectFormModule_FormHandler0NotExists_Description;
 
-    public static String Error_ObjectFormModule_MethodOnCreateAtServerMissingCall;
-    public static String Error_ObjectFormModule_MethodOnReadAtServerMissingCall;
-    public static String Error_ObjectFormModule_MethodOnOpenMissingCall;
-    public static String Error_ObjectFormModule_MethodExecuteCommandMissingCall;
-    public static String Error_ObjectFormModule_MethodExecuteCommandAtServerMissingCall;
-    public static String Error_ObjectFormModule_MethodRereadCommandsMissingCall;
+    public static String Error_ObjectFormModule_MethodsNotExists_Title;
+    public static String Error_ObjectFormModule_MethodsNotExists_Description;
 
-    public static String Error_ObjectFormModule_MethodOnCreateAtServerExcessiveCall;
-    public static String Error_ObjectFormModule_MethodOnReadAtServerExcessiveCall;
-    public static String Error_ObjectFormModule_MethodOnOpenExcessiveCall;
-    public static String Error_ObjectFormModule_MethodExecuteCommandExcessiveMethod;
-    public static String Error_ObjectFormModule_MethodExecuteCommandAtServerExcessiveMethod;
-    public static String Error_ObjectFormModule_MethodRereadCommandsExcessiveMethod;
+    public static String Error_ObjectFormModule_FormHandler0MissingCall_Title;
+    public static String Error_ObjectFormModule_FormHandler0MissingCall_Description;
 
-    public static String Error_ObjectFormModule_MethodExecuteCommandAtServerMissingExport_Title;
-    public static String Error_ObjectFormModule_MethodExecuteCommandAtServerMissingExport_Description;
+    public static String Error_ObjectFormModule_FormHandler0ExcessiveCall_Title;
+    public static String Error_ObjectFormModule_FormHandler0ExcessiveCall_Description;
+
+    public static String Error_ObjectFormModule_FormHandler0ExcessiveMethod_Title;
+    public static String Error_ObjectFormModule_FormHandler0ExcessiveMethod_Description;
+
+    public static String Error_ObjectFormModule_Method0MissingExport_Title;
+    public static String Error_ObjectFormModule_Method0MissingExport_Description;
 
     static
     {

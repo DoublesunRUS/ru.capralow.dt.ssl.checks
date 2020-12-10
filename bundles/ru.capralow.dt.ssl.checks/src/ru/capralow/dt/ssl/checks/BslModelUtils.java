@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.EcoreUtil2;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
@@ -44,6 +45,7 @@ import com._1c.g5.v8.dt.bsl.resource.BslResolveCrossReferencesJob;
 import com._1c.g5.v8.dt.bsl.resource.BslResource;
 import com._1c.g5.v8.dt.bsl.resource.DynamicFeatureAccessComputer;
 import com._1c.g5.v8.dt.core.platform.IV8Project;
+import com._1c.g5.v8.dt.lcore.nodemodel.util.CustomNodeModelUtils;
 import com._1c.g5.v8.dt.mcore.DerivedProperty;
 import com._1c.g5.v8.dt.mcore.Environmental;
 import com._1c.g5.v8.dt.mcore.McorePackage;
@@ -103,6 +105,51 @@ public final class BslModelUtils
             }
         }
         return bracketNode;
+    }
+
+    public static Statement getNearestStatement(Method method, int offset)
+    {
+        ICompositeNode methodNode = NodeModelUtils.findActualNodeFor(method);
+        ILeafNode node = CustomNodeModelUtils.findLeafNodeAtOffset(methodNode, offset);
+        EObject actualObject = NodeModelUtils.findActualSemanticObjectFor(node);
+        if (actualObject instanceof Method)
+        {
+            EList<Statement> allStatements = method.allStatements();
+            if (!allStatements.isEmpty())
+                actualObject = allStatements.get(allStatements.size() - 1);
+        }
+        if (actualObject instanceof Statement)
+            return (Statement)actualObject;
+
+        return EcoreUtil2.getContainerOfType(actualObject, Statement.class);
+    }
+
+    public static StringLiteral getNearestStringLiteral(Method method, int offset)
+    {
+        ICompositeNode methodNode = NodeModelUtils.findActualNodeFor(method);
+        ILeafNode node = CustomNodeModelUtils.findLeafNodeAtOffset(methodNode, offset);
+        EObject actualObject = NodeModelUtils.findActualSemanticObjectFor(node);
+        if (actualObject instanceof StringLiteral)
+            return (StringLiteral)actualObject;
+
+        return EcoreUtil2.getContainerOfType(actualObject, StringLiteral.class);
+    }
+
+    public static void parseStatements(Method method, List<String> objectsList, IV8Project v8Project)
+    {
+        EList<FormalParam> methodParams = method.getFormalParams();
+        if (methodParams.isEmpty())
+            return;
+
+        Map<String, String> modulesAliases = new HashMap<>(); // Поддержка ОбщегоНазначения.ОбщийМодуль()
+
+        String variableName = methodParams.get(0).getName();
+
+        for (Statement statement : method.getStatements())
+            if (statement instanceof IfStatement)
+                parseIfStatement(statement, variableName, objectsList, modulesAliases, v8Project);
+            else
+                parseSimpleStatement(statement, variableName, objectsList, modulesAliases, v8Project);
     }
 
     private static void parseIfStatement(Statement statement, String variableName, List<String> objectsList,
@@ -250,26 +297,9 @@ public final class BslModelUtils
         }
     }
 
-    public static void parseStatements(Method method, List<String> objectsList, IV8Project v8Project)
+    private static boolean parseSubsystemExistsStatement(IfStatement ifStatement, IV8Project v8Project)
     {
-        EList<FormalParam> methodParams = method.getFormalParams();
-        if (methodParams.isEmpty())
-            return;
-
-        Map<String, String> modulesAliases = new HashMap<>(); // Поддержка ОбщегоНазначения.ОбщийМодуль()
-
-        String variableName = methodParams.get(0).getName();
-
-        for (Statement statement : method.getStatements())
-            if (statement instanceof IfStatement)
-                parseIfStatement(statement, variableName, objectsList, modulesAliases, v8Project);
-            else
-                parseSimpleStatement(statement, variableName, objectsList, modulesAliases, v8Project);
-    }
-
-    private static Boolean parseSubsystemExistsStatement(IfStatement ifStatement, IV8Project v8Project)
-    {
-        Boolean trueStatement = true;
+        boolean trueStatement = true;
 
         Conditional ifPart = ifStatement.getIfPart();
         Invocation predicate = (Invocation)ifPart.getPredicate();
